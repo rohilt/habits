@@ -1,32 +1,33 @@
 <script lang="ts">
-	import type { Entry, EntryHeader, EntryProperty, Journal } from "./types/journal.types";
+	import type { Entry, EntryHeader, EntryProperty, Journal } from './types/journal.types';
 
-    let files: FileList;
+	let files: FileList;
 
-	const parseFileContents = (fileContents: string): Journal => fileContents.split(/\r?\n\r?\n/).map(parseJournalEntry)
-	
-    const parseJournalEntry = (contents: string): Entry => {
+	const parseFileContents = (fileContents: string): Journal =>
+		fileContents.split(/\r?\n\r?\n/).map(parseJournalEntry);
+
+	const parseJournalEntry = (contents: string): Entry => {
 		let vals = contents.split(/\r?\n/);
 		return {
 			...parseDateActivity(vals[0]),
 			properties: vals.slice(1).map(parseProperties)
-		}      
-    }
+		};
+	};
 
-    const parseDateActivity = (contents: string): EntryHeader => {
+	const parseDateActivity = (contents: string): EntryHeader => {
 		let vals = contents.split(/ /);
 		return {
 			date: new Date(Date.parse(vals[0])),
 			activity: vals[1]
-		}
-    }
+		};
+	};
 
 	// TODO
 	const parseProperties = (contents: string): EntryProperty => {
 		return {
 			label: contents
 		};
-	}
+	};
 </script>
 
 <main>
@@ -37,8 +38,10 @@
 			<div class="flex flex-wrap gap-4 justify-items-center">
 				{#each parseFileContents(fileContents) as journalEntry}
 					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
-						<div class="text-indigo-600 text-center font-italic">{journalEntry.date.toDateString()}</div>
-						<br/>
+						<div class="text-indigo-600 text-center font-italic">
+							{journalEntry.date.toDateString()}
+						</div>
+						<br />
 						<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
 						<ul class="list-disc list-inside">
 							{#each journalEntry.properties as prop}
@@ -51,7 +54,7 @@
 		{/await}
 	{:else}
 		<p>Upload a file to get started.</p>
-		<input type="file" bind:files>
+		<input type="file" bind:files />
 	{/if}
 </main>
 

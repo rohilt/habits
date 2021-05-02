@@ -1,17 +1,17 @@
 export interface EntryProperty {
-    label: string,
-    // TODO
+	label: string;
+	// TODO
 }
 
 export interface EntryHeader {
-    date: Date,
-    activity: string,
+	date: Date;
+	activity: string;
 }
 
 export interface Entry {
-    date: Date,
-    activity: string,
-    properties: EntryProperty[],
+	date: Date;
+	activity: string;
+	properties: EntryProperty[];
 }
 
-export type Journal = Entry[]
+export type Journal = Entry[];
