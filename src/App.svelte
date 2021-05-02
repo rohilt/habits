@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { parseFileContents } from "./parser/parser";
+	import { parseFileContents } from './parser/parser';
 
 	let files: FileList;
 </script>
