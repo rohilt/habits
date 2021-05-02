@@ -1,29 +1,32 @@
 <script lang="ts">
-    interface JournalEntry {
-      date: Date,
-      activity: String,
-      properties: String[],
-    }
+	import type { Entry, EntryHeader, EntryProperty, Journal } from "./types/journal.types";
 
     let files: FileList;
 
-    const parseJournalEntry = (contents: String) => {
-      let vals = contents.split(/\r?\n/);
-      return {
-        ...parseDateActivity(vals[0]),
-        properties: vals.slice(1)
-      }      
+	const parseFileContents = (fileContents: string): Journal => fileContents.split(/\r?\n\r?\n/).map(parseJournalEntry)
+	
+    const parseJournalEntry = (contents: string): Entry => {
+		let vals = contents.split(/\r?\n/);
+		return {
+			...parseDateActivity(vals[0]),
+			properties: vals.slice(1).map(parseProperties)
+		}      
     }
 
-    const parseDateActivity = (contents: String) => {
-      let vals = contents.split(/ /);
-      return {
-        date: new Date(Date.parse(vals[0])),
-        activity: vals[1],
-      }
+    const parseDateActivity = (contents: string): EntryHeader => {
+		let vals = contents.split(/ /);
+		return {
+			date: new Date(Date.parse(vals[0])),
+			activity: vals[1]
+		}
     }
 
-    const parseFileContents = (fileContents: String): JournalEntry[] => fileContents.split(/\r?\n\r?\n/).map(parseJournalEntry)
+	// TODO
+	const parseProperties = (contents: string): EntryProperty => {
+		return {
+			label: contents
+		};
+	}
 </script>
 
 <main>
@@ -39,7 +42,7 @@
 						<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
 						<ul class="list-disc list-inside">
 							{#each journalEntry.properties as prop}
-								<li>{prop}</li>
+								<li>{prop.label}</li>
 							{/each}
 						</ul>
 					</div>
