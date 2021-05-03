@@ -37,7 +37,8 @@
 					{/each}
 				{:else}
 					<p>parse error: {maybeJournal.error}</p>
-					<p>error at {maybeJournal.activity}</p>
+					<br />
+					<p>error at {maybeJournal.activity}, {maybeJournal.date}</p>
 				{/if}
 			</div>
 		{/await}

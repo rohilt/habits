@@ -61,7 +61,7 @@ const parseHeader = (contents: string): EntryHeader | ParseError => {
 };
 
 const parseProperties = (contents: string[]): EntryProperties | ParseError => {
-	if (!contents.every((s) => /$:|min|hour|hr/.test(s)))
+	if (!contents.every((s) => /^:|min|hour|hr/.test(s)))
 		return {
 			parseType: 'parseError',
 			error: 'entry has a property which is neither arbitrary (:property) or time (min, hour)'
