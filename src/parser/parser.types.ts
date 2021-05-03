@@ -9,11 +9,17 @@ export interface EntryProperties {
 	time?: number;
 }
 
-export interface EntryProperty {
-	parseType: 'entryProperty';
-	entryType: 'arbitrary' | 'time';
-	label?: string;
+export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
+
+export interface ArbitraryEntryProperty {
+	parseType: 'arbitraryEntryProperty';
+	label: string;
 	value: number | string;
+}
+
+export interface TimeEntryProperty {
+	parseType: 'timeEntryProperty';
+	time: number;
 }
 
 export interface Entry {
