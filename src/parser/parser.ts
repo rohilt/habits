@@ -18,8 +18,11 @@ export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is J
 	(maybeJournal as Journal).parseType === 'journal';
 
 export const parseFileContents = (fileContents: string): Journal | ParseError => {
-	let entries = fileContents.split(/(\r?\n){2}(?!\t)/).map(parseJournalEntry);
-	console.log(fileContents.split(/(\r?\n){2}(?!\t)/));
+	let entries = fileContents
+		.replace(/(\r?\n)+/, '\r\n')
+		.split(/(\r?\n)+(?![\t\r\n])/)
+		.filter((s) => !s.match(/^\r?\n$/))
+		.map(parseJournalEntry);
 	if (entries.some(isParseError)) return entries.filter(isParseError)[0];
 	else
 		return {
