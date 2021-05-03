@@ -24,7 +24,7 @@
 					{#each maybeJournal.entries as journalEntry}
 						<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
 							<div class="text-indigo-600 text-center font-italic">
-								{journalEntry.date.toDateString()}
+								{journalEntry.date.toISOString().slice(0, 10)}
 							</div>
 							<br />
 							<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
