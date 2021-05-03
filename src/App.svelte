@@ -1,29 +1,44 @@
 <script lang="ts">
-	import { parseFileContents } from './parser/parser';
+	import { isEntry, isJournal, isParseError, parseFileContents } from './parser/parser';
+	import type { Journal, ParseError } from './parser/parser.types';
 
 	let files: FileList;
+	const parseJournal = (contents: string): Journal => {
+		let maybeJournal = parseFileContents(contents);
+		if (isParseError(maybeJournal))
+			return {
+				parseType: 'journal',
+				entries: []
+			};
+		else return maybeJournal;
+	};
 </script>
 
 <main>
 	{#if files}
-		{#await files[0].text()}
-			<p>Loading...</p>
-		{:then fileContents}
+		{#await files[0].text().then((t) => parseFileContents(t))}
+			<p>Loading {files[0].name}...</p>
+		{:then maybeJournal}
 			<div class="flex flex-wrap gap-4 justify-items-center">
-				{#each parseFileContents(fileContents) as journalEntry}
-					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
-						<div class="text-indigo-600 text-center font-italic">
-							{journalEntry.date.toDateString()}
+				{#if maybeJournal.parseType == 'journal'}
+					{#each maybeJournal.entries as journalEntry}
+						<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
+							<div class="text-indigo-600 text-center font-italic">
+								{journalEntry.date.toDateString()}
+							</div>
+							<br />
+							<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
+							<ul class="list-disc list-inside">
+								{#each Object.keys(journalEntry) as k}
+									<li>{k}: {journalEntry[k]}</li>
+								{/each}
+							</ul>
 						</div>
-						<br />
-						<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
-						<ul class="list-disc list-inside">
-							{#each journalEntry.properties as prop}
-								<li>{prop.label}</li>
-							{/each}
-						</ul>
-					</div>
-				{/each}
+					{/each}
+				{:else}
+					<p>parse error: {maybeJournal.error}</p>
+					<p>error at {maybeJournal.activity}</p>
+				{/if}
 			</div>
 		{/await}
 	{:else}
