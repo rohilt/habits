@@ -31,7 +31,7 @@ export const parseFileContents = (fileContents: string): Journal | ParseError =>
 		};
 };
 
-const parseJournalEntry = (contents: string): Entry | ParseError => {
+export const parseJournalEntry = (contents: string): Entry | ParseError => {
 	let vals = contents.split(/\r?\n\t/);
 	let header = parseHeader(vals[0]);
 	if (isParseError(header)) return header;
@@ -49,7 +49,7 @@ const parseJournalEntry = (contents: string): Entry | ParseError => {
 	};
 };
 
-const parseHeader = (contents: string): EntryHeader | ParseError => {
+export const parseHeader = (contents: string): EntryHeader | ParseError => {
 	let vals = contents.split(/ /);
 	let date = new Date(Date.parse(vals[0]));
 	if (!date)
@@ -64,7 +64,7 @@ const parseHeader = (contents: string): EntryHeader | ParseError => {
 	};
 };
 
-const parseProperties = (contents: string[]): EntryProperties | ParseError => {
+export const parseProperties = (contents: string[]): EntryProperties | ParseError => {
 	if (!contents.every((s) => /^:|min|hour|hr/.test(s)))
 		return {
 			parseType: 'parseError',

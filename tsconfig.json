@@ -4,6 +4,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["jest"]
   }
 }
