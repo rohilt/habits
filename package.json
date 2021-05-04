@@ -7,7 +7,8 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "validate": "svelte-check",
-    "lint": "prettier --write --plugin-search-dir=. ./src/**/*"
+    "lint": "prettier --write --plugin-search-dir=. ./src/**/*",
+    "test": "echo \"no tests to run yet\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
