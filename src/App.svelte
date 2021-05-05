@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { parseFileContents } from './parser/parser';
-	import type { Journal, ParseError } from './parser/parser.types';
-	import { isEntry, isJournal, isParseError } from './parser/parser.types';
+	import { parseJournal } from './parser/parser';
 
 	let files: FileList;
 </script>
 
 <main>
 	{#if files}
-		{#await files[0].text().then((t) => parseFileContents(t))}
+		{#await files[0].text().then((t) => parseJournal(t))}
 			<p>Loading {files[0].name}...</p>
 		{:then maybeJournal}
 			<div class="flex flex-wrap gap-4 justify-items-center">

@@ -9,12 +9,12 @@ import type {
 
 import { isEntry, isJournal, isParseError } from './parser.types';
 
-export const parseFileContents = (fileContents: string): Journal | ParseError => {
+export const parseJournal = (fileContents: string): Journal | ParseError => {
 	let entries = fileContents
 		.replace(/(\r?\n)+/, '\r\n')
 		.split(/(\r?\n)+(?![\t\r\n])/)
 		.filter((s) => !s.match(/^\r?\n$/))
-		.map(parseJournalEntry);
+		.map(parseEntry);
 	if (entries.some(isParseError)) return entries.filter(isParseError)[0];
 	else
 		return {
@@ -23,7 +23,7 @@ export const parseFileContents = (fileContents: string): Journal | ParseError =>
 		};
 };
 
-export const parseJournalEntry = (contents: string): Entry | ParseError => {
+export const parseEntry = (contents: string): Entry | ParseError => {
 	let vals = contents.split(/\r?\n\t/);
 	let header = parseHeader(vals[0]);
 	if (isParseError(header)) return header;
