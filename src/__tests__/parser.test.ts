@@ -1,4 +1,4 @@
-import { parseFileContents, parseHeader, parseProperties } from '../parser/parser';
+import { parseHeader, parseProperties } from '../parser/parser';
 
 it('parseHeader: simple', () => {
 	expect(parseHeader('2020-01-01 ACTIVITY')).toEqual({
@@ -7,12 +7,14 @@ it('parseHeader: simple', () => {
 		activity: 'ACTIVITY'
 	});
 });
+
 it('parseHeader: bad date', () => {
 	expect(parseHeader('NOT A VALID DATE')).toEqual({
 		parseType: 'parseError',
 		error: 'invalid date'
 	});
 });
+
 it('parseHeader: missing activity', () => {
 	expect(parseHeader('2020-01-01')).toEqual({
 		parseType: 'parseError',
