@@ -42,3 +42,13 @@ export interface ParseError {
 	activity?: string;
 	line?: number;
 }
+
+export const isParseError = (
+	maybeError: Entry | EntryHeader | EntryProperty | EntryProperties | Journal | ParseError
+): maybeError is ParseError => (maybeError as ParseError).parseType === 'parseError';
+
+export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
+	(maybeEntry as Entry).parseType === 'entry';
+
+export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is Journal =>
+	(maybeJournal as Journal).parseType === 'journal';

@@ -1,17 +1,9 @@
 <script lang="ts">
-	import { isEntry, isJournal, isParseError, parseFileContents } from './parser/parser';
+	import { parseFileContents } from './parser/parser';
 	import type { Journal, ParseError } from './parser/parser.types';
+	import { isEntry, isJournal, isParseError } from './parser/parser.types';
 
 	let files: FileList;
-	const parseJournal = (contents: string): Journal => {
-		let maybeJournal = parseFileContents(contents);
-		if (isParseError(maybeJournal))
-			return {
-				parseType: 'journal',
-				entries: []
-			};
-		else return maybeJournal;
-	};
 </script>
 
 <main>

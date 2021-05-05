@@ -7,15 +7,7 @@ import type {
 	ParseError
 } from './parser.types';
 
-export const isParseError = (
-	maybeError: Entry | EntryHeader | EntryProperty | EntryProperties | Journal | ParseError
-): maybeError is ParseError => (maybeError as ParseError).parseType === 'parseError';
-
-export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
-	(maybeEntry as Entry).parseType === 'entry';
-
-export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is Journal =>
-	(maybeJournal as Journal).parseType === 'journal';
+import { isEntry, isJournal, isParseError } from './parser.types';
 
 export const parseFileContents = (fileContents: string): Journal | ParseError => {
 	let entries = fileContents
