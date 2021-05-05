@@ -56,7 +56,7 @@ export const parseHeader = (contents: string): EntryHeader | ParseError => {
 			parseType: 'parseError',
 			error: 'missing activity'
 		};
-	let dateGroup = vals[0].match(/(\d\d\d\d)-(\d\d)-(\d\d)/);
+	let dateGroup = vals[0].match(/(\d{4})-(\d{2})-(\d{2})/);
 	if (!dateGroup)
 		return {
 			parseType: 'parseError',
