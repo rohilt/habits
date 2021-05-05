@@ -81,27 +81,32 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			parseType: 'parseError',
 			error: 'missing time property'
 		};
+	let properties = contents.map(parseProperty);
 	return {
 		parseType: 'entryProperties',
 		time: 0
 	}; //TODO
 };
 
-// const parseProperty = (contents: string): EntryProperty | ParseError => {
-// 	const splitContents = contents.split(/ /);
-// 	if (/min|hour/.test(contents)) {
-// 		let minutesIndex = splitContents
-// 			.map((s) => /min/.test(s))
-// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
-// 		let hoursIndex = splitContents
-// 			.map((s) => /hour/.test(s))
-// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
-// 		let minutes = Number(splitContents[minutesIndex]) + 60 * Number(splitContents[hoursIndex]);
-// 		return {
-// 			minutes: minutes
-// 		};
-// 	}
-// 	return {
-// 		label: contents
-// 	};
-// };
+const parseProperty = (contents: string): EntryProperty | ParseError => {
+	return {
+		parseType: 'timeEntryProperty',
+		time: 1
+	};
+	// 	const splitContents = contents.split(/ /);
+	// 	if (/min|hour/.test(contents)) {
+	// 		let minutesIndex = splitContents
+	// 			.map((s) => /min/.test(s))
+	// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
+	// 		let hoursIndex = splitContents
+	// 			.map((s) => /hour/.test(s))
+	// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
+	// 		let minutes = Number(splitContents[minutesIndex]) + 60 * Number(splitContents[hoursIndex]);
+	// 		return {
+	// 			minutes: minutes
+	// 		};
+	// 	}
+	// 	return {
+	// 		label: contents
+	// 	};
+};

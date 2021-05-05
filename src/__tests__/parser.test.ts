@@ -44,3 +44,17 @@ it('parseProperties: invalid property', () => {
 		error: 'entry has a property which is neither arbitrary (:property) or time (min, hour)'
 	});
 });
+
+it('parseProperties: duplicate property', () => {
+	expect(parseProperties([':distance 1', ':distance 2'])).toEqual({
+		parseType: 'parseError',
+		error: 'entry has a duplicate property: distance'
+	});
+});
+
+it('parseProperties: duplicate property (even if same)', () => {
+	expect(parseProperties([':distance 1', ':distance 1'])).toEqual({
+		parseType: 'parseError',
+		error: 'entry has a duplicate property: distance'
+	});
+});
