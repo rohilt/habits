@@ -27,6 +27,7 @@ export interface Entry {
 	date: Date;
 	activity: string;
 	minutes?: number;
+	line: number;
 }
 
 export interface Journal {
@@ -39,4 +40,5 @@ export interface ParseError {
 	error: string;
 	date?: Date;
 	activity?: string;
+	line?: number;
 }

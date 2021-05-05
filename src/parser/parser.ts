@@ -45,7 +45,8 @@ export const parseJournalEntry = (contents: string): Entry | ParseError => {
 	return {
 		...header,
 		...properties,
-		parseType: 'entry'
+		parseType: 'entry',
+		line: 0
 	};
 };
 
