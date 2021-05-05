@@ -102,6 +102,14 @@ it('parseProperty: simple boolean', () => {
 	});
 });
 
+it('parseProperty: simple boolean (with space)', () => {
+	expect(parseProperty(':prop ')).toEqual({
+		parseType: 'arbitraryEntryProperty',
+		label: 'prop',
+		value: true
+	});
+});
+
 it('parseProperty: invalid property name', () => {
 	expect(parseProperty(':inval1d')).toEqual({
 		parseType: 'parseError',
