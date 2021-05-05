@@ -14,7 +14,7 @@ export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
 export interface ArbitraryEntryProperty {
 	parseType: 'arbitraryEntryProperty';
 	label: string;
-	value: number | string;
+	value: number | string | boolean;
 }
 
 export interface TimeEntryProperty {
