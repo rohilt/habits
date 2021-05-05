@@ -62,15 +62,10 @@ export const parseHeader = (contents: string): EntryHeader | ParseError => {
 			parseType: 'parseError',
 			error: 'invalid date'
 		};
-	let { year, month, date } = {
-		year: Number(dateGroup[1]),
-		month: Number(dateGroup[2]) - 1,
-		date: Number(dateGroup[3])
-	};
-	let dateObject = new Date(year, month, date);
+	let date = new Date(Number(dateGroup[1]), Number(dateGroup[2]) - 1, Number(dateGroup[3]));
 	return {
 		parseType: 'entryHeader',
-		date: dateObject,
+		date: date,
 		activity: vals.slice(1).join(' ')
 	};
 };
