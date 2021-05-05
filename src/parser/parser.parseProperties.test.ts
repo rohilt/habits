@@ -19,7 +19,7 @@ it('parseProperties: missing time', () => {
 it('parseProperties: invalid property', () => {
 	expect(parseProperties([':distance 1', 'this is not valid', ':location xyz'])).toEqual({
 		parseType: 'parseError',
-		error: 'entry has a property which is neither arbitrary (:property) or time (min, hour)'
+		error: 'entry property is neither arbitrary (:property) or time (min, hour)'
 	});
 });
 

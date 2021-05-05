@@ -67,7 +67,7 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 	if (!contents.every((s) => /^:|min|hour|hr/.test(s)))
 		return {
 			parseType: 'parseError',
-			error: 'entry has a property which is neither arbitrary (:property) or time (min, hour)'
+			error: 'entry property is neither arbitrary (:property) or time (min, hour)'
 		};
 	if (!contents.some((s) => /min|hour|hr/.test(s)))
 		return {
