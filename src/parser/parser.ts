@@ -82,11 +82,18 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 };
 
 export const parseProperty = (contents: string): EntryProperty | ParseError => {
-	let arbitraryGroup = contents.match(/^:([A-Za-z]+)( (\w+))?$/);
-	// if (arbitraryGroup) return {
-	// 	parseType: 'arbitraryEntryProperty',
-
-	// }
+	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ?(\w+)?$/);
+	let value = arbitraryGroup[2]
+		? Number(arbitraryGroup[2])
+			? Number(arbitraryGroup[2])
+			: arbitraryGroup[2]
+		: true;
+	if (arbitraryGroup)
+		return {
+			parseType: 'arbitraryEntryProperty',
+			label: arbitraryGroup[1],
+			value: value
+		};
 	return {
 		parseType: 'timeEntryProperty',
 		time: 1
