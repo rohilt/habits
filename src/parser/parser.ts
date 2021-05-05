@@ -88,7 +88,7 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 	}; //TODO
 };
 
-const parseProperty = (contents: string): EntryProperty | ParseError => {
+export const parseProperty = (contents: string): EntryProperty | ParseError => {
 	return {
 		parseType: 'timeEntryProperty',
 		time: 1
