@@ -51,16 +51,27 @@ export const parseJournalEntry = (contents: string): Entry | ParseError => {
 
 export const parseHeader = (contents: string): EntryHeader | ParseError => {
 	let vals = contents.split(/ /);
-	let date = new Date(Date.parse(vals[0]));
-	if (!date)
+	if (vals.length < 2)
 		return {
 			parseType: 'parseError',
-			error: 'invalid date format'
+			error: 'missing activity'
 		};
+	let dateGroup = vals[0].match(/(\d\d\d\d)-(\d\d)-(\d\d)/);
+	if (!dateGroup)
+		return {
+			parseType: 'parseError',
+			error: 'invalid date'
+		};
+	let { year, month, date } = {
+		year: Number(dateGroup[1]),
+		month: Number(dateGroup[2]) - 1,
+		date: Number(dateGroup[3])
+	};
+	let dateObject = new Date(year, month, date);
 	return {
 		parseType: 'entryHeader',
-		date: date,
-		activity: vals[1]
+		date: dateObject,
+		activity: vals.slice(1).join(' ')
 	};
 };
 

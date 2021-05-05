@@ -6,7 +6,7 @@ export interface EntryHeader {
 
 export interface EntryProperties {
 	parseType: 'entryProperties';
-	time?: number;
+	time: number;
 }
 
 export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
