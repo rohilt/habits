@@ -120,12 +120,14 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 				parseType: 'parseError',
 				error: 'invalid time value: ' + v
 			};
-		else if (i % 2 === 1 && !v.match(/min|hr|hour/))
+		else if (i % 2 === 1 && (!v.match(/min|h(ou)?r/) || (v.match(/min/) && v.match(/h(ou)?r/))))
 			return {
 				parseType: 'parseError',
 				error: 'invalid time unit: ' + v
 			};
 	}
+	let timeVals = vals.filter((_, i) => i % 2 === 0).map((i) => Number(i));
+	let unitVals = vals.filter((_, i) => i % 2 === 1);
 	return {
 		parseType: 'timeEntryProperty',
 		time: 1

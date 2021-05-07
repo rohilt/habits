@@ -84,6 +84,13 @@ it('parseProperty: invalid unit', () => {
 	});
 });
 
+it('parseProperty: invalid unit', () => {
+	expect(parseProperty('10 minhrs')).toEqual({
+		parseType: 'parseError',
+		error: 'invalid time unit: minhrs'
+	});
+});
+
 it('parseProperty: simple number', () => {
 	expect(parseProperty(':prop 5')).toEqual({
 		parseType: 'arbitraryEntryProperty',
