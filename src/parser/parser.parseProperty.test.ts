@@ -70,6 +70,13 @@ it('parseProperty: negative time value', () => {
 	});
 });
 
+it('parseProperty: invalid unit', () => {
+	expect(parseProperty('minutes 10')).toEqual({
+		parseError: 'parseError',
+		error: 'invalid time unit: 10'
+	});
+});
+
 it('parseProperty: simple number', () => {
 	expect(parseProperty(':prop 5')).toEqual({
 		parseType: 'arbitraryEntryProperty',

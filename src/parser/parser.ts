@@ -96,8 +96,7 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 			label: arbitraryGroupBool[2],
 			value: !arbitraryGroupBool[1]
 		};
-	let invalidArbitraryProperty = contents.match(/^:!?[A-Za-z]+ ([-0-9.]+|[ \w]+)?$/);
-	if (invalidArbitraryProperty)
+	if (contents.match(/^:!?[A-Za-z]+ ([-0-9.]+|[ \w]+)?$/))
 		return {
 			parseType: 'parseError',
 			error: 'property cannot be boolean and number/string'
@@ -107,6 +106,12 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 		return {
 			parseType: 'parseError',
 			error: 'invalid property name: ' + invalidPropertyName[1]
+		};
+	let vals = contents.split(/ /);
+	if (vals.length % 2 == 1)
+		return {
+			parseType: 'parseError',
+			error: 'missing time value'
 		};
 	return {
 		parseType: 'timeEntryProperty',
