@@ -67,7 +67,7 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 	if (!contents.every((s) => /^:|min|h(ou)?r/.test(s)))
 		return {
 			parseType: 'parseError',
-			error: 'entry property is neither arbitrary (:property) or time (min, hour)'
+			error: 'invalid entry property: ' + contents.filter((s) => !/^:|min|h(ou)?r/.test(s))[0]
 		};
 	if (!contents.some((s) => /min|h(ou)?r/.test(s)))
 		return {
@@ -75,6 +75,7 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			error: 'missing time property'
 		};
 	let properties = contents.map(parseProperty);
+	if (properties.some(isParseError)) return properties.filter(isParseError)[0];
 	return {
 		parseType: 'entryProperties',
 		time: 0
