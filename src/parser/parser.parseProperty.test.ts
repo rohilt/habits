@@ -38,7 +38,7 @@ it('parseProperty: missing time value', () => {
 it('parseProperty: missing time value again', () => {
 	expect(parseProperty('mins hrs')).toEqual({
 		parseType: 'parseError',
-		error: 'missing time value'
+		error: 'invalid time value: mins'
 	});
 });
 
