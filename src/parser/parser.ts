@@ -82,7 +82,7 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 };
 
 export const parseProperty = (contents: string): EntryProperty | ParseError => {
-	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ?(\w+)?$/);
+	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ?([\w ]+)?$/);
 	let value = arbitraryGroup[2]
 		? Number(arbitraryGroup[2])
 			? Number(arbitraryGroup[2])
