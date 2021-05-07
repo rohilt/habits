@@ -1,6 +1,6 @@
 import { parseProperties } from './parser';
 
-it('parseProperties: simple', () => {
+it('simple', () => {
 	expect(parseProperties(['30 minutes', ':distance 1', ':location xyz'])).toEqual({
 		parseType: 'entryProperties',
 		time: 30,
@@ -9,7 +9,7 @@ it('parseProperties: simple', () => {
 	});
 });
 
-it('parseProperties: complex', () => {
+it('complex', () => {
 	expect(
 		parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz, :!bool'])
 	).toEqual({
@@ -21,7 +21,7 @@ it('parseProperties: complex', () => {
 	});
 });
 
-it('parseProperties: complex', () => {
+it('complex', () => {
 	expect(
 		parseProperties(['45 minutes 1 hour', '15 min', ':distance 1', ':distance 0.7, :bool'])
 	).toEqual({
@@ -32,28 +32,28 @@ it('parseProperties: complex', () => {
 	});
 });
 
-it('parseProperties: missing time', () => {
+it('missing time', () => {
 	expect(parseProperties([':distance 1', ':location xyz'])).toEqual({
 		parseType: 'parseError',
 		error: 'missing time property'
 	});
 });
 
-it('parseProperties: invalid property', () => {
+it('invalid property', () => {
 	expect(parseProperties([':distance 1', 'this is not valid', ':location xyz'])).toEqual({
 		parseType: 'parseError',
 		error: 'invalid entry property: this is not valid'
 	});
 });
 
-it('parseProperties: propogates parseProperty parse error (invalid property)', () => {
+it('propogates parseProperty parse error (invalid property)', () => {
 	expect(parseProperties([':distance 1', ':inval$d', ':location xyz'])).toEqual({
 		parseType: 'parseError',
 		error: 'invalid property name: inval$d'
 	});
 });
 
-it('parseProperties: duplicate property', () => {
+it('duplicate property', () => {
 	expect(parseProperties(['10 min, :distance 1', ':distance 2'])).toEqual({
 		parseType: 'entryProperties',
 		time: 10,
@@ -61,7 +61,7 @@ it('parseProperties: duplicate property', () => {
 	});
 });
 
-it('parseProperties: duplicate property (even if same)', () => {
+it('duplicate property (even if same)', () => {
 	expect(parseProperties(['1 hr 15 mins, 10 minutes, :distance 1', ':distance 1'])).toEqual({
 		parseType: 'entryProperties',
 		time: 85,
@@ -69,14 +69,14 @@ it('parseProperties: duplicate property (even if same)', () => {
 	});
 });
 
-it('parseProperties: duplicate string property', () => {
+it('duplicate string property', () => {
 	expect(parseProperties([':location abc', ':location xyz', '15 mins'])).toEqual({
 		parseType: 'parseError',
 		error: 'duplicate string property: location'
 	});
 });
 
-it('parseProperties: duplicate boolean property', () => {
+it('duplicate boolean property', () => {
 	expect(parseProperties([':bool', ':!bool', '15 mins'])).toEqual({
 		parseType: 'parseError',
 		error: 'duplicate boolean property: bool'
