@@ -82,16 +82,21 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 };
 
 export const parseProperty = (contents: string): EntryProperty | ParseError => {
-	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ?([\w ]+)?$/);
-	let value = arbitraryGroup[2]
-		? Number(arbitraryGroup[2])
-			? Number(arbitraryGroup[2])
-			: arbitraryGroup[2]
-		: true;
+	let arbitraryGroup = contents.match(/^:(!?)([A-Za-z]+) ?([\w ]+)?$/);
+	if (arbitraryGroup[1] && arbitraryGroup[3])
+		return {
+			parseType: 'parseError',
+			error: 'property cannot be boolean and number/string'
+		};
+	let value = arbitraryGroup[3]
+		? Number(arbitraryGroup[3])
+			? Number(arbitraryGroup[3])
+			: arbitraryGroup[3]
+		: !arbitraryGroup[1];
 	if (arbitraryGroup)
 		return {
 			parseType: 'arbitraryEntryProperty',
-			label: arbitraryGroup[1],
+			label: arbitraryGroup[2],
 			value: value
 		};
 	return {

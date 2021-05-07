@@ -126,6 +126,13 @@ it('parseProperty: simple false boolean (with space)', () => {
 	});
 });
 
+it('parseProperty: boolean and string', () => {
+	expect(parseProperty(':!prop asdf')).toEqual({
+		parseType: 'parseError',
+		error: 'property cannot be boolean and number/string'
+	});
+});
+
 it('parseProperty: invalid property name', () => {
 	expect(parseProperty(':inval1d')).toEqual({
 		parseType: 'parseError',
