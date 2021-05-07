@@ -83,6 +83,20 @@ it('duplicate boolean property', () => {
 	});
 });
 
+it('inconsistent property type', () => {
+	expect(parseProperties([':bad 15', ':!bad', '15 mins'])).toEqual({
+		parseType: 'parseError',
+		error: 'property has inconsistent type: bad'
+	});
+});
+
+it('inconsistent property type', () => {
+	expect(parseProperties([":bad this shouldn't work", ':bad', '15 mins'])).toEqual({
+		parseType: 'parseError',
+		error: 'property has inconsistent type: bad'
+	});
+});
+
 it('propogate parseProperty parse error (arbitrary boolean/string)', () => {
 	expect(parseProperties(['5 mins', ':!prop asdf'])).toEqual({
 		parseType: 'parseError',
