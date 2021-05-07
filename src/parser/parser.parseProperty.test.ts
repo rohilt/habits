@@ -94,7 +94,7 @@ it('parseProperty: simple number (negative)', () => {
 	});
 });
 
-it('parseProperty: simple boolean', () => {
+it('parseProperty: simple true boolean', () => {
 	expect(parseProperty(':prop')).toEqual({
 		parseType: 'arbitraryEntryProperty',
 		label: 'prop',
@@ -102,11 +102,27 @@ it('parseProperty: simple boolean', () => {
 	});
 });
 
-it('parseProperty: simple boolean (with space)', () => {
+it('parseProperty: simple true boolean (with space)', () => {
 	expect(parseProperty(':prop ')).toEqual({
 		parseType: 'arbitraryEntryProperty',
 		label: 'prop',
 		value: true
+	});
+});
+
+it('parseProperty: simple false boolean', () => {
+	expect(parseProperty(':!prop')).toEqual({
+		parseType: 'arbitraryEntryProperty',
+		label: 'prop',
+		value: false
+	});
+});
+
+it('parseProperty: simple false boolean (with space)', () => {
+	expect(parseProperty(':!prop ')).toEqual({
+		parseType: 'arbitraryEntryProperty',
+		label: 'prop',
+		value: false
 	});
 });
 
