@@ -85,11 +85,10 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ([-0-9.]+|[ \w]+)$/);
 	let arbitraryGroupBool = contents.match(/^:(!?)([A-Za-z]+)$/);
 	if (arbitraryGroup) {
-		let value = Number(arbitraryGroup[2]) ? Number(arbitraryGroup[2]) : arbitraryGroup[2];
 		return {
 			parseType: 'arbitraryEntryProperty',
 			label: arbitraryGroup[1],
-			value: value
+			value: Number(arbitraryGroup[2]) ? Number(arbitraryGroup[2]) : arbitraryGroup[2]
 		};
 	}
 	if (arbitraryGroupBool)
