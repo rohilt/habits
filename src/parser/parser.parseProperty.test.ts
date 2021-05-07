@@ -70,9 +70,16 @@ it('parseProperty: negative time value', () => {
 	});
 });
 
-it('parseProperty: invalid unit', () => {
+it('parseProperty: invalid value', () => {
 	expect(parseProperty('minutes 10')).toEqual({
-		parseError: 'parseError',
+		parseType: 'parseError',
+		error: 'invalid time value: minutes'
+	});
+});
+
+it('parseProperty: invalid unit', () => {
+	expect(parseProperty('10 10 mins hrs')).toEqual({
+		parseType: 'parseError',
 		error: 'invalid time unit: 10'
 	});
 });

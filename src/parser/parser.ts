@@ -108,11 +108,24 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 			error: 'invalid property name: ' + invalidPropertyName[1]
 		};
 	let vals = contents.split(/ /);
-	if (vals.length % 2 == 1)
+	if (vals.length % 2 === 1)
 		return {
 			parseType: 'parseError',
 			error: 'missing time value'
 		};
+	for (let i = 0; i < vals.length; i++) {
+		let v = vals[i];
+		if (i % 2 === 0 && !v.match(/^[0-9]+$/))
+			return {
+				parseType: 'parseError',
+				error: 'invalid time value: ' + v
+			};
+		else if (i % 2 === 1 && !v.match(/min|hr|hour/))
+			return {
+				parseType: 'parseError',
+				error: 'invalid time unit: ' + v
+			};
+	}
 	return {
 		parseType: 'timeEntryProperty',
 		time: 1
