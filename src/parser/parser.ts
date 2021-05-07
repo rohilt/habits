@@ -64,12 +64,12 @@ export const parseHeader = (contents: string): EntryHeader | ParseError => {
 };
 
 export const parseProperties = (contents: string[]): EntryProperties | ParseError => {
-	if (!contents.every((s) => /^:|min|hour|hr/.test(s)))
+	if (!contents.every((s) => /^:|min|h(ou)?r/.test(s)))
 		return {
 			parseType: 'parseError',
 			error: 'entry property is neither arbitrary (:property) or time (min, hour)'
 		};
-	if (!contents.some((s) => /min|hour|hr/.test(s)))
+	if (!contents.some((s) => /min|h(ou)?r/.test(s)))
 		return {
 			parseType: 'parseError',
 			error: 'missing time property'
