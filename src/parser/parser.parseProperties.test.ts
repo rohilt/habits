@@ -10,11 +10,25 @@ it('parseProperties: simple', () => {
 });
 
 it('parseProperties: complex', () => {
-	expect(parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz'])).toEqual({
+	expect(
+		parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz, :!bool'])
+	).toEqual({
 		parseType: 'entryProperties',
 		time: 300,
 		distance: 1,
-		location: 'xyz'
+		location: 'xyz',
+		bool: false
+	});
+});
+
+it('parseProperties: complex', () => {
+	expect(
+		parseProperties(['45 minutes 1 hour', '15 min', ':distance 1', ':distance 0.7, :bool'])
+	).toEqual({
+		parseType: 'entryProperties',
+		time: 120,
+		distance: 1.7,
+		bool: true
 	});
 });
 
@@ -32,7 +46,7 @@ it('parseProperties: invalid property', () => {
 	});
 });
 
-it('parseProperties: invalid property (calls parseProperty)', () => {
+it('parseProperties: propogates parseProperty parse error (invalid property)', () => {
 	expect(parseProperties([':distance 1', ':inval$d', ':location xyz'])).toEqual({
 		parseType: 'parseError',
 		error: 'invalid property name: inval$d'
@@ -66,5 +80,19 @@ it('parseProperties: duplicate boolean property', () => {
 	expect(parseProperties([':bool', ':!bool', '15 mins'])).toEqual({
 		parseType: 'parseError',
 		error: 'duplicate boolean property: bool'
+	});
+});
+
+it('propogate parseProperty parse error (arbitrary boolean/string)', () => {
+	expect(parseProperties(['5 mins', ':!prop asdf'])).toEqual({
+		parseType: 'parseError',
+		error: 'property cannot be boolean and number/string'
+	});
+});
+
+it('propogate parseProperty parse error (bad time value)', () => {
+	expect(parseProperties(['mins hrs'])).toEqual({
+		parseType: 'parseError',
+		error: 'invalid time value: mins'
 	});
 });
