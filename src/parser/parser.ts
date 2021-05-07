@@ -7,7 +7,13 @@ import type {
 	ParseError
 } from './parser.types';
 
-import { isEntry, isJournal, isParseError } from './parser.types';
+import {
+	isEntry,
+	isArbitraryEntryProperty,
+	isTimeEntryProperty,
+	isJournal,
+	isParseError
+} from './parser.types';
 
 export const parseJournal = (fileContents: string): Journal | ParseError => {
 	let entries = fileContents
@@ -74,12 +80,26 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			parseType: 'parseError',
 			error: 'missing time property'
 		};
-	let properties = contents.map(parseProperty);
-	if (properties.some(isParseError)) return properties.filter(isParseError)[0];
+	let maybeProperties = contents.map(parseProperty);
+	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
+	let arbitraryProperties = maybeProperties
+		.filter(isArbitraryEntryProperty)
+		.reduce((prev, curr) => {
+			// TODO handle duplicates, conflicts
+			return {
+				...prev,
+				[curr.label]: curr.value
+			};
+		}, {});
+	let time = maybeProperties
+		.filter(isTimeEntryProperty)
+		.map((p) => p.time)
+		.reduce((p, c) => p + c, 0);
 	return {
+		...arbitraryProperties,
 		parseType: 'entryProperties',
-		time: 0
-	}; //TODO
+		time: time
+	};
 };
 
 export const parseProperty = (contents: string): EntryProperty | ParseError => {

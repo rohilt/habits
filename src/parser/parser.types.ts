@@ -52,3 +52,13 @@ export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
 
 export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is Journal =>
 	(maybeJournal as Journal).parseType === 'journal';
+
+export const isArbitraryEntryProperty = (
+	maybeEntryProperty: ArbitraryEntryProperty | ParseError
+): maybeEntryProperty is ArbitraryEntryProperty =>
+	(maybeEntryProperty as ArbitraryEntryProperty).parseType === 'arbitraryEntryProperty';
+
+export const isTimeEntryProperty = (
+	maybeEntryProperty: TimeEntryProperty | ParseError
+): maybeEntryProperty is TimeEntryProperty =>
+	(maybeEntryProperty as TimeEntryProperty).parseType === 'timeEntryProperty';

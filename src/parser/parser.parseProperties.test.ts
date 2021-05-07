@@ -11,7 +11,7 @@ it('simple', () => {
 
 it('complex', () => {
 	expect(
-		parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz, :!bool'])
+		parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz', ':!bool'])
 	).toEqual({
 		parseType: 'entryProperties',
 		time: 300,
@@ -23,7 +23,7 @@ it('complex', () => {
 
 it('complex', () => {
 	expect(
-		parseProperties(['45 minutes 1 hour', '15 min', ':distance 1', ':distance 0.7, :bool'])
+		parseProperties(['45 minutes 1 hour', '15 min', ':distance 1', ':distance 0.7', ':bool'])
 	).toEqual({
 		parseType: 'entryProperties',
 		time: 120,
@@ -40,16 +40,18 @@ it('missing time', () => {
 });
 
 it('invalid property', () => {
-	expect(parseProperties([':distance 1', 'this is not valid', ':location xyz'])).toEqual({
-		parseType: 'parseError',
-		error: 'invalid entry property: this is not valid'
-	});
+	expect(parseProperties([':distance 1', 'this is not valid', ':location xyz', '15 mins'])).toEqual(
+		{
+			parseType: 'parseError',
+			error: 'invalid entry property: this is not valid'
+		}
+	);
 });
 
 it('propogates parseProperty parse error (invalid property)', () => {
-	expect(parseProperties([':distance 1', ':inval$d', ':location xyz'])).toEqual({
+	expect(parseProperties([':distance 1', ':inval1d', ':location xyz', '30 minute'])).toEqual({
 		parseType: 'parseError',
-		error: 'invalid property name: inval$d'
+		error: 'invalid property name: inval1d'
 	});
 });
 
@@ -91,7 +93,7 @@ it('inconsistent property type', () => {
 });
 
 it('inconsistent property type', () => {
-	expect(parseProperties([":bad this shouldn't work", ':bad', '15 mins'])).toEqual({
+	expect(parseProperties([':bad this shouldnt work', ':bad', '15 mins'])).toEqual({
 		parseType: 'parseError',
 		error: 'property has inconsistent type: bad'
 	});
