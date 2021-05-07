@@ -24,14 +24,14 @@ it('parseProperties: invalid property', () => {
 });
 
 it('parseProperties: duplicate property', () => {
-	expect(parseProperties([':distance 1', ':distance 2'])).toEqual({
+	expect(parseProperties(['10 min, :distance 1', ':distance 2'])).toEqual({
 		parseType: 'parseError',
 		error: 'entry has a duplicate property: distance'
 	});
 });
 
 it('parseProperties: duplicate property (even if same)', () => {
-	expect(parseProperties([':distance 1', ':distance 1'])).toEqual({
+	expect(parseProperties(['1 hr, :distance 1', ':distance 1'])).toEqual({
 		parseType: 'parseError',
 		error: 'entry has a duplicate property: distance'
 	});
