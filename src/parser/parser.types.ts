@@ -6,7 +6,7 @@ export interface EntryHeader {
 
 export interface EntryProperties {
 	parseType: 'entryProperties';
-	time?: number;
+	time: number;
 }
 
 export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
@@ -14,7 +14,7 @@ export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
 export interface ArbitraryEntryProperty {
 	parseType: 'arbitraryEntryProperty';
 	label: string;
-	value: number | string;
+	value: number | string | boolean;
 }
 
 export interface TimeEntryProperty {
@@ -27,6 +27,7 @@ export interface Entry {
 	date: Date;
 	activity: string;
 	minutes?: number;
+	line: number;
 }
 
 export interface Journal {
@@ -39,4 +40,15 @@ export interface ParseError {
 	error: string;
 	date?: Date;
 	activity?: string;
+	line?: number;
 }
+
+export const isParseError = (
+	maybeError: Entry | EntryHeader | EntryProperty | EntryProperties | Journal | ParseError
+): maybeError is ParseError => (maybeError as ParseError).parseType === 'parseError';
+
+export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
+	(maybeEntry as Entry).parseType === 'entry';
+
+export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is Journal =>
+	(maybeJournal as Journal).parseType === 'journal';
