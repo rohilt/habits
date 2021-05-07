@@ -127,25 +127,9 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 			};
 	}
 	let timeVals = vals.filter((_, i) => i % 2 === 0).map((i) => Number(i));
-	let unitVals = vals.filter((_, i) => i % 2 === 1);
+	let unitVals = vals.filter((_, i) => i % 2 === 1).map((u) => (u.match(/min/) ? 1 : 60));
 	return {
 		parseType: 'timeEntryProperty',
-		time: 1
+		time: timeVals.reduce((p, c, i) => p + c * unitVals[i], 0)
 	};
-	// 	const splitContents = contents.split(/ /);
-	// 	if (/min|hour/.test(contents)) {
-	// 		let minutesIndex = splitContents
-	// 			.map((s) => /min/.test(s))
-	// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
-	// 		let hoursIndex = splitContents
-	// 			.map((s) => /hour/.test(s))
-	// 			.reduce((a, c, i) => (a == -1 && c ? i : -1), -1);
-	// 		let minutes = Number(splitContents[minutesIndex]) + 60 * Number(splitContents[hoursIndex]);
-	// 		return {
-	// 			minutes: minutes
-	// 		};
-	// 	}
-	// 	return {
-	// 		label: contents
-	// 	};
 };
