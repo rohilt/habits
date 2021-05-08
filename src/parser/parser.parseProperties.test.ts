@@ -56,7 +56,7 @@ it('propogates parseProperty parse error (invalid property)', () => {
 });
 
 it('duplicate property', () => {
-	expect(parseProperties(['10 min, :distance 1', ':distance 2'])).toEqual({
+	expect(parseProperties(['10 min', ':distance 1', ':distance 2'])).toEqual({
 		parseType: 'entryProperties',
 		minutes: 10,
 		distance: 3
@@ -64,7 +64,7 @@ it('duplicate property', () => {
 });
 
 it('duplicate property (even if same)', () => {
-	expect(parseProperties(['1 hr 15 mins, 10 minutes, :distance 1', ':distance 1'])).toEqual({
+	expect(parseProperties(['1 hr 15 mins', '10 minutes', ':distance 1', ':distance 1'])).toEqual({
 		parseType: 'entryProperties',
 		minutes: 85,
 		distance: 2
