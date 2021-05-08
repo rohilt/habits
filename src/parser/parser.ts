@@ -78,11 +78,27 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
 	let properties = maybeProperties.filter(isEntryProperty).reduce((prev, curr) => {
 		// TODO handle duplicates, conflicts
+		if (prev.error) return prev;
+		if (prev[curr.label]) {
+			if (typeof prev[curr.label].value !== typeof curr.value)
+				return {
+					error: 'property has inconsistent type: ' + curr.label
+				};
+			if (typeof prev[curr.label].value !== 'number')
+				return {
+					error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
+				};
+		}
 		return {
 			...prev,
 			[curr.label]: curr.value
 		};
-	}, {});
+	}, {} as { error?: string });
+	if (properties.error)
+		return {
+			parseType: 'parseError',
+			error: properties.error
+		};
 	// let time = maybeProperties
 	// 	.filter(isTimeEntryProperty)
 	// 	.map((p) => p.time)
