@@ -80,11 +80,11 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 		// TODO handle duplicates, conflicts
 		if (prev.error) return prev;
 		if (prev[curr.label]) {
-			if (typeof prev[curr.label].value !== typeof curr.value)
+			if (typeof prev[curr.label] !== typeof curr.value)
 				return {
 					error: 'property has inconsistent type: ' + curr.label
 				};
-			if (typeof prev[curr.label].value !== 'number')
+			if (typeof prev[curr.label] !== 'number')
 				return {
 					error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
 				};
