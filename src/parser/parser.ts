@@ -7,13 +7,7 @@ import type {
 	ParseError
 } from './parser.types';
 
-import {
-	isEntry,
-	isArbitraryEntryProperty,
-	isTimeEntryProperty,
-	isJournal,
-	isParseError
-} from './parser.types';
+import { isEntry, isEntryProperty, isJournal, isParseError } from './parser.types';
 
 export const parseJournal = (fileContents: string): Journal | ParseError => {
 	let entries = fileContents
@@ -75,45 +69,42 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			parseType: 'parseError',
 			error: 'invalid entry property: ' + contents.filter((s) => !/^:|min|h(ou)?r/.test(s))[0]
 		};
-	if (!contents.some((s) => /min|h(ou)?r/.test(s)))
-		return {
-			parseType: 'parseError',
-			error: 'missing time property'
-		};
+	// if (!contents.some((s) => /min|h(ou)?r/.test(s)))
+	// 	return {
+	// 		parseType: 'parseError',
+	// 		error: 'missing time property'
+	// 	};
 	let maybeProperties = contents.map(parseProperty);
 	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
-	let arbitraryProperties = maybeProperties
-		.filter(isArbitraryEntryProperty)
-		.reduce((prev, curr) => {
-			// TODO handle duplicates, conflicts
-			return {
-				...prev,
-				[curr.label]: curr.value
-			};
-		}, {});
-	let time = maybeProperties
-		.filter(isTimeEntryProperty)
-		.map((p) => p.time)
-		.reduce((p, c) => p + c, 0);
+	let properties = maybeProperties.filter(isEntryProperty).reduce((prev, curr) => {
+		// TODO handle duplicates, conflicts
+		return {
+			...prev,
+			[curr.label]: curr.value
+		};
+	}, {});
+	// let time = maybeProperties
+	// 	.filter(isTimeEntryProperty)
+	// 	.map((p) => p.time)
+	// 	.reduce((p, c) => p + c, 0);
 	return {
-		...arbitraryProperties,
-		parseType: 'entryProperties',
-		time: time
+		...properties,
+		parseType: 'entryProperties'
 	};
 };
 
-export const parseProperty = (contents: string): EntryProperty | ParseError => {
+export const parseProperty = (contents: string): EntryProperty<any> | ParseError => {
 	let arbitraryGroup = contents.match(/^:([A-Za-z]+) ([-0-9.]+|[ \w]+)$/);
 	let arbitraryGroupBool = contents.match(/^:(!?)([A-Za-z]+)$/);
 	if (arbitraryGroup)
 		return {
-			parseType: 'arbitraryEntryProperty',
+			parseType: 'entryProperty',
 			label: arbitraryGroup[1],
 			value: Number(arbitraryGroup[2]) ? Number(arbitraryGroup[2]) : arbitraryGroup[2]
 		};
 	if (arbitraryGroupBool)
 		return {
-			parseType: 'arbitraryEntryProperty',
+			parseType: 'entryProperty',
 			label: arbitraryGroupBool[2],
 			value: !arbitraryGroupBool[1]
 		};
@@ -150,7 +141,8 @@ export const parseProperty = (contents: string): EntryProperty | ParseError => {
 	let timeVals = vals.filter((_, i) => i % 2 === 0).map((i) => Number(i));
 	let unitVals = vals.filter((_, i) => i % 2 === 1).map((u) => (u.match(/min/) ? 1 : 60));
 	return {
-		parseType: 'timeEntryProperty',
-		time: timeVals.reduce((p, c, i) => p + c * unitVals[i], 0)
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: timeVals.reduce((p, c, i) => p + c * unitVals[i], 0)
 	};
 };
