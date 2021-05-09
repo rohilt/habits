@@ -11,8 +11,9 @@
 	router.start();
 </script>
 
-<nav class="flex gap-8 md:px-16 md:pt-2">
-	<a href="/" class="text-xl md:text-4xl flex-grow text-black">habits</a>
+<nav class="flex gap-8 px-8 md:px-16 py-2 md:py-4 bg-gray-50 items-center shadow">
+	<a href="/" class="text-4xl flex-none text-black">habits</a>
+	<div class="flex-grow" />
 	<a href="/about" class="flex-none">about</a>
 	<a href="https://github.com/rohilt/habits" target="_blank" class="flex-none">source</a>
 </nav>

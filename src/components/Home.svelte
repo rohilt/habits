@@ -6,7 +6,7 @@
 </script>
 
 <main>
-	<div class="flex md:px-16 py-8 flex-col">
+	<div class="flex px-8 md:px-16 py-8 flex-col">
 		{#if files}
 			{#await files[0].text().then((t) => parseJournal(t))}
 				<p>Loading {files[0].name}...</p>
