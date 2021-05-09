@@ -2,29 +2,33 @@ import { parseProperty } from './parser';
 
 it('simple time', () => {
 	expect(parseProperty('20 minutes, 2 hours')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 140
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 140
 	});
 });
 
 it('simple time (no comma)', () => {
 	expect(parseProperty('4 hours 35 minutes')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 275
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 275
 	});
 });
 
 it('simple time (minutes)', () => {
 	expect(parseProperty('45 mins')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 45
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 45
 	});
 });
 
 it('simple time (hours)', () => {
 	expect(parseProperty('10 hrs')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 600
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 600
 	});
 });
 
@@ -51,15 +55,17 @@ it('invalid number', () => {
 
 it('sum of time values', () => {
 	expect(parseProperty('5 mins 10 minutes')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 15
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 15
 	});
 });
 
 it('complex sum of time values', () => {
 	expect(parseProperty('1 hour 25 mins 4 hrs 3 mins')).toEqual({
-		parseType: 'timeEntryProperty',
-		time: 328
+		parseType: 'entryProperty',
+		label: 'minutes',
+		value: 328
 	});
 });
 
@@ -93,7 +99,7 @@ it('invalid unit', () => {
 
 it('simple number', () => {
 	expect(parseProperty(':prop 5')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: 5
 	});
@@ -101,7 +107,7 @@ it('simple number', () => {
 
 it('simple number (decimal)', () => {
 	expect(parseProperty(':prop 8.4')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: 8.4
 	});
@@ -109,7 +115,7 @@ it('simple number (decimal)', () => {
 
 it('simple number (negative)', () => {
 	expect(parseProperty(':prop -10.5')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: -10.5
 	});
@@ -117,7 +123,7 @@ it('simple number (negative)', () => {
 
 it('simple true boolean', () => {
 	expect(parseProperty(':prop')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: true
 	});
@@ -132,7 +138,7 @@ it('simple true boolean (with space)', () => {
 
 it('simple false boolean', () => {
 	expect(parseProperty(':!prop')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: false
 	});
@@ -161,7 +167,7 @@ it('invalid property name', () => {
 
 it('simple string', () => {
 	expect(parseProperty(':prop asdf')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: 'asdf'
 	});
@@ -169,7 +175,7 @@ it('simple string', () => {
 
 it('simple string (with number)', () => {
 	expect(parseProperty(':prop 5 asdf')).toEqual({
-		parseType: 'arbitraryEntryProperty',
+		parseType: 'entryProperty',
 		label: 'prop',
 		value: '5 asdf'
 	});

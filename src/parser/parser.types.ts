@@ -6,20 +6,12 @@ export interface EntryHeader {
 
 export interface EntryProperties {
 	parseType: 'entryProperties';
-	time: number;
 }
 
-export type EntryProperty = ArbitraryEntryProperty | TimeEntryProperty;
-
-export interface ArbitraryEntryProperty {
-	parseType: 'arbitraryEntryProperty';
+export interface EntryProperty<Type> {
+	parseType: 'entryProperty';
 	label: string;
-	value: number | string | boolean;
-}
-
-export interface TimeEntryProperty {
-	parseType: 'timeEntryProperty';
-	time: number;
+	value: Type;
 }
 
 export interface Entry {
@@ -44,7 +36,7 @@ export interface ParseError {
 }
 
 export const isParseError = (
-	maybeError: Entry | EntryHeader | EntryProperty | EntryProperties | Journal | ParseError
+	maybeError: Entry | EntryHeader | EntryProperty<any> | EntryProperties | Journal | ParseError
 ): maybeError is ParseError => (maybeError as ParseError).parseType === 'parseError';
 
 export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
@@ -53,12 +45,9 @@ export const isEntry = (maybeEntry: Entry | ParseError): maybeEntry is Entry =>
 export const isJournal = (maybeJournal: Journal | ParseError): maybeJournal is Journal =>
 	(maybeJournal as Journal).parseType === 'journal';
 
-export const isArbitraryEntryProperty = (
-	maybeEntryProperty: ArbitraryEntryProperty | ParseError
-): maybeEntryProperty is ArbitraryEntryProperty =>
-	(maybeEntryProperty as ArbitraryEntryProperty).parseType === 'arbitraryEntryProperty';
+export const isEntryProperty = (
+	maybeEntryProperty: EntryProperty<any> | ParseError
+): maybeEntryProperty is EntryProperty<any> =>
+	(maybeEntryProperty as EntryProperty<any>).parseType === 'entryProperty';
 
-export const isTimeEntryProperty = (
-	maybeEntryProperty: TimeEntryProperty | ParseError
-): maybeEntryProperty is TimeEntryProperty =>
-	(maybeEntryProperty as TimeEntryProperty).parseType === 'timeEntryProperty';
+export const entryPropertyType = (entryProperty: EntryProperty<any>) => typeof entryProperty.value;

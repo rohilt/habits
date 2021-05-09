@@ -3,7 +3,7 @@ import { parseProperties } from './parser';
 it('simple', () => {
 	expect(parseProperties(['30 minutes', ':distance 1', ':location xyz'])).toEqual({
 		parseType: 'entryProperties',
-		time: 30,
+		minutes: 30,
 		distance: 1,
 		location: 'xyz'
 	});
@@ -14,7 +14,7 @@ it('complex', () => {
 		parseProperties(['45 minutes 3 hour', '75 min', ':distance 1', ':location xyz', ':!bool'])
 	).toEqual({
 		parseType: 'entryProperties',
-		time: 300,
+		minutes: 300,
 		distance: 1,
 		location: 'xyz',
 		bool: false
@@ -26,7 +26,7 @@ it('complex', () => {
 		parseProperties(['45 minutes 1 hour', '15 min', ':distance 1', ':distance 0.7', ':bool'])
 	).toEqual({
 		parseType: 'entryProperties',
-		time: 120,
+		minutes: 120,
 		distance: 1.7,
 		bool: true
 	});
@@ -56,17 +56,17 @@ it('propogates parseProperty parse error (invalid property)', () => {
 });
 
 it('duplicate property', () => {
-	expect(parseProperties(['10 min, :distance 1', ':distance 2'])).toEqual({
+	expect(parseProperties(['10 min', ':distance 1', ':distance 2'])).toEqual({
 		parseType: 'entryProperties',
-		time: 10,
+		minutes: 10,
 		distance: 3
 	});
 });
 
 it('duplicate property (even if same)', () => {
-	expect(parseProperties(['1 hr 15 mins, 10 minutes, :distance 1', ':distance 1'])).toEqual({
+	expect(parseProperties(['1 hr 15 mins', '10 minutes', ':distance 1', ':distance 1'])).toEqual({
 		parseType: 'entryProperties',
-		time: 85,
+		minutes: 85,
 		distance: 2
 	});
 });
