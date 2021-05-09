@@ -1,0 +1,1 @@
+import { parseEntry } from './parser';
