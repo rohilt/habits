@@ -71,27 +71,32 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 		};
 	let maybeProperties = contents.map(parseProperty);
 	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
-	let properties = maybeProperties.filter(isEntryProperty).reduce((prev, curr) => {
-		if (prev.error) return prev;
-		if (prev[curr.label]) {
-			if (typeof prev[curr.label] !== typeof curr.value)
+	let properties = maybeProperties.filter(isEntryProperty).reduce(
+		(prev, curr) => {
+			if (prev.error) return prev;
+			if (prev[curr.label]) {
+				if (typeof prev[curr.label] !== typeof curr.value)
+					return {
+						minutes: -1,
+						error: 'property has inconsistent type: ' + curr.label
+					};
+				if (typeof prev[curr.label] !== 'number')
+					return {
+						minutes: -1,
+						error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
+					};
 				return {
-					error: 'property has inconsistent type: ' + curr.label
+					...prev,
+					[curr.label]: prev[curr.label] + curr.value
 				};
-			if (typeof prev[curr.label] !== 'number')
-				return {
-					error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
-				};
+			}
 			return {
 				...prev,
-				[curr.label]: prev[curr.label] + curr.value
+				[curr.label]: curr.value
 			};
-		}
-		return {
-			...prev,
-			[curr.label]: curr.value
-		};
-	}, {} as { minutes?: number; error?: string });
+		},
+		{ minutes: 0 } as { minutes: number; error?: string }
+	);
 	if (properties.error)
 		return {
 			parseType: 'parseError',
