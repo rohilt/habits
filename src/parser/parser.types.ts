@@ -6,6 +6,7 @@ export interface EntryHeader {
 
 export interface EntryProperties {
 	parseType: 'entryProperties';
+	minutes: number;
 }
 
 export interface EntryProperty<Type> {
@@ -18,7 +19,7 @@ export interface Entry {
 	parseType: 'entry';
 	date: Date;
 	activity: string;
-	minutes?: number;
+	minutes: number;
 	line: number;
 }
 

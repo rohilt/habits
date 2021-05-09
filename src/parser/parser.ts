@@ -14,7 +14,7 @@ export const parseJournal = (fileContents: string): Journal | ParseError => {
 		.replace(/(\r?\n)+/, '\r\n')
 		.split(/(\r?\n)+(?![\t\r\n])/)
 		.filter((s) => !s.match(/^\r?\n$/))
-		.map(parseEntry);
+		.map((e) => parseEntry(e, 0));
 	if (entries.some(isParseError)) return entries.filter(isParseError)[0];
 	else
 		return {
@@ -23,7 +23,7 @@ export const parseJournal = (fileContents: string): Journal | ParseError => {
 		};
 };
 
-export const parseEntry = (contents: string): Entry | ParseError => {
+export const parseEntry = (contents: string, line: number): Entry | ParseError => {
 	let vals = contents.split(/\r?\n\t/);
 	let header = parseHeader(vals[0]);
 	if (isParseError(header)) return header;
@@ -38,7 +38,7 @@ export const parseEntry = (contents: string): Entry | ParseError => {
 		...header,
 		...properties,
 		parseType: 'entry',
-		line: 0
+		line: line
 	};
 };
 
@@ -71,27 +71,32 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 		};
 	let maybeProperties = contents.map(parseProperty);
 	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
-	let properties = maybeProperties.filter(isEntryProperty).reduce((prev, curr) => {
-		if (prev.error) return prev;
-		if (prev[curr.label]) {
-			if (typeof prev[curr.label] !== typeof curr.value)
+	let properties = maybeProperties.filter(isEntryProperty).reduce(
+		(prev, curr) => {
+			if (prev.error) return prev;
+			if (prev[curr.label]) {
+				if (typeof prev[curr.label] !== typeof curr.value)
+					return {
+						minutes: -1,
+						error: 'property has inconsistent type: ' + curr.label
+					};
+				if (typeof prev[curr.label] !== 'number')
+					return {
+						minutes: -1,
+						error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
+					};
 				return {
-					error: 'property has inconsistent type: ' + curr.label
+					...prev,
+					[curr.label]: prev[curr.label] + curr.value
 				};
-			if (typeof prev[curr.label] !== 'number')
-				return {
-					error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
-				};
+			}
 			return {
 				...prev,
-				[curr.label]: prev[curr.label] + curr.value
+				[curr.label]: curr.value
 			};
-		}
-		return {
-			...prev,
-			[curr.label]: curr.value
-		};
-	}, {} as { minutes?: number; error?: string });
+		},
+		{ minutes: 0 } as { minutes: number; error?: string }
+	);
 	if (properties.error)
 		return {
 			parseType: 'parseError',
