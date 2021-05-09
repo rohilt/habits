@@ -11,7 +11,11 @@
 	router.start();
 </script>
 
-<nav>habits.</nav>
+<nav class="flex gap-8 md:px-16 md:pt-2">
+	<a href="/" class="text-xl md:text-4xl flex-grow text-black">habits</a>
+	<a href="/about" class="flex-none">about</a>
+	<a href="https://github.com/rohilt/habits" target="_blank" class="flex-none">source</a>
+</nav>
 <svelte:component this={page} />
 
 <style global lang="postcss">

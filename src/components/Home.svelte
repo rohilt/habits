@@ -5,9 +5,8 @@
 	let files: FileList;
 </script>
 
-<main class="hero-pattern">
-	<div class="flex md:px-16 md:py-8 flex-col">
-		<h1 class="text-5xl">habits</h1>
+<main>
+	<div class="flex md:px-16 py-8 flex-col">
 		{#if files}
 			{#await files[0].text().then((t) => parseJournal(t))}
 				<p>Loading {files[0].name}...</p>
