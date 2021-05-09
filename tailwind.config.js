@@ -13,7 +13,8 @@ module.exports = {
       'serif': ['Source Serif Pro'],
       'monospace': ['Source Code Pro']
     },
-    extend: {},
+    extend: {
+    },
   },
   variants: {
     extend: {},

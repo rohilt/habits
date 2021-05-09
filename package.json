@@ -40,6 +40,7 @@
     "autoprefixer": "^10.2.5",
     "postcss": "^8.2.13",
     "sirv-cli": "^1.0.0",
+    "svelte-file-dropzone": "^0.0.15",
     "tailwindcss": "^2.1.2"
   },
   "jest": {
