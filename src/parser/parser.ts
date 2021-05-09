@@ -82,6 +82,10 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 				return {
 					error: 'duplicate ' + typeof curr.value + ' property: ' + curr.label
 				};
+			return {
+				...prev,
+				[curr.label]: prev[curr.label] + curr.value
+			};
 		}
 		return {
 			...prev,
