@@ -8,6 +8,11 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      'sans': ['Fira Sans'],
+      'serif': ['Source Serif Pro'],
+      'monospace': ['Source Code Pro']
+    },
     extend: {},
   },
   variants: {
