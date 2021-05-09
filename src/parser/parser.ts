@@ -69,15 +69,9 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			parseType: 'parseError',
 			error: 'invalid entry property: ' + contents.filter((s) => !/^:|min|h(ou)?r/.test(s))[0]
 		};
-	// if (!contents.some((s) => /min|h(ou)?r/.test(s)))
-	// 	return {
-	// 		parseType: 'parseError',
-	// 		error: 'missing time property'
-	// 	};
 	let maybeProperties = contents.map(parseProperty);
 	if (maybeProperties.some(isParseError)) return maybeProperties.filter(isParseError)[0];
 	let properties = maybeProperties.filter(isEntryProperty).reduce((prev, curr) => {
-		// TODO handle duplicates, conflicts
 		if (prev.error) return prev;
 		if (prev[curr.label]) {
 			if (typeof prev[curr.label] !== typeof curr.value)
@@ -93,11 +87,16 @@ export const parseProperties = (contents: string[]): EntryProperties | ParseErro
 			...prev,
 			[curr.label]: curr.value
 		};
-	}, {} as { error?: string });
+	}, {} as { minutes?: number; error?: string });
 	if (properties.error)
 		return {
 			parseType: 'parseError',
 			error: properties.error
+		};
+	if (!properties.minutes)
+		return {
+			parseType: 'parseError',
+			error: 'missing time property'
 		};
 	// let time = maybeProperties
 	// 	.filter(isTimeEntryProperty)
