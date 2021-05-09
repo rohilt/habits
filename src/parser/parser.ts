@@ -14,7 +14,7 @@ export const parseJournal = (fileContents: string): Journal | ParseError => {
 		.replace(/(\r?\n)+/, '\r\n')
 		.split(/(\r?\n)+(?![\t\r\n])/)
 		.filter((s) => !s.match(/^\r?\n$/))
-		.map(parseEntry);
+		.map((e) => parseEntry(e, 0));
 	if (entries.some(isParseError)) return entries.filter(isParseError)[0];
 	else
 		return {
@@ -23,7 +23,7 @@ export const parseJournal = (fileContents: string): Journal | ParseError => {
 		};
 };
 
-export const parseEntry = (contents: string): Entry | ParseError => {
+export const parseEntry = (contents: string, line: number): Entry | ParseError => {
 	let vals = contents.split(/\r?\n\t/);
 	let header = parseHeader(vals[0]);
 	if (isParseError(header)) return header;
@@ -38,7 +38,7 @@ export const parseEntry = (contents: string): Entry | ParseError => {
 		...header,
 		...properties,
 		parseType: 'entry',
-		line: 0
+		line: line
 	};
 };
 
