@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Journal, ParseError } from '../parser/parser.types';
+	import type { Journal, ParseError, Entry } from '../parser/parser.types';
 	import { createEventDispatcher } from 'svelte';
 	import OverviewChart from './OverviewChart.svelte';
 
@@ -8,6 +8,19 @@
 	const dispatch = createEventDispatcher();
 
 	let timeView = 'today';
+	let data = maybeJournal.parseType == 'journal' ? maybeJournal.entries : null;
+	let filteredData;
+	let overviewData;
+
+	$: if (data) filteredData = data;
+	$: if (filteredData)
+		overviewData = filteredData.reduce((p, c: Entry) => {
+			return {
+				...p,
+				[c.activity]: (p[c.activity] ? p[c.activity] : 0) + c.minutes
+			};
+		}, {});
+	$: console.log(overviewData);
 </script>
 
 <div class="flex flex-col items-center w-full items-stretch gap-4">
@@ -36,7 +49,7 @@
 			>
 		</div>
 		<div class="md:grid md:grid-cols-2 gap-16">
-			<OverviewChart />
+			<OverviewChart {overviewData} />
 			<div class="flex flex-wrap gap-4 justify-items-center">
 				{#each maybeJournal.entries as journalEntry}
 					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
