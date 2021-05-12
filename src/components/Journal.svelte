@@ -31,9 +31,14 @@
 						...p,
 						[a]: overviewData[a]
 					};
-				}, {}),
-				Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
+				}, {})
 			};
+			console.log(activities.slice(4));
+			if (activities.slice(4).length === 0)
+				overviewData = {
+					...overviewData,
+					Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
+				};
 		}
 		dispatch('loading', { status: false });
 	}

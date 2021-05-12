@@ -16,7 +16,13 @@
 						{
 							label: 'Habits',
 							data: Object.values(overviewData),
-							backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+							backgroundColor: [
+								'rgb(34, 34, 59)',
+								'rgb(74, 78, 105)',
+								'rgb(154, 140, 152)',
+								'rgb(201, 173, 167)',
+								'rgb(242, 233, 228'
+							],
 							hoverOffset: 4
 						}
 					]
@@ -25,10 +31,19 @@
 					responsive: true,
 					plugins: {
 						legend: {
-							position: 'bottom'
+							position: 'bottom',
+							labels: {
+								font: {
+									family: 'Fira Sans'
+								}
+							}
 						},
 						title: {
 							display: false
+						},
+						tooltip: {
+							backgroundColor: 'rgb(255, 255, 255)',
+							bodyColor: 'rgb(0, 0, 0)'
 						}
 					}
 				}
