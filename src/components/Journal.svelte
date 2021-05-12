@@ -53,7 +53,9 @@
 	<button class="underline" on:click={() => dispatch('fileUpload', {})}
 		>(return to file upload)</button
 	>
-	<canvas bind:this={ctx} id="myChart" width="400" height="400" />
+	<div class="relative w-100">
+		<canvas bind:this={ctx} id="myChart" />
+	</div>
 	<div class="flex flex-wrap gap-4 justify-items-center">
 		{#if maybeJournal.parseType == 'journal'}
 			{#each maybeJournal.entries as journalEntry}
