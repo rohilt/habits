@@ -71,9 +71,15 @@
 						</div>
 						<br />
 						<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
+						<div class="text-l text-indigo-400">
+							{journalEntry.minutes >= 60 ? Math.floor(journalEntry.minutes / 60) + ' hours, ' : ''}
+							{journalEntry.minutes % 60} minutes
+						</div>
 						<ul class="list-disc list-inside">
 							{#each Object.keys(journalEntry) as k}
-								<li>{k}: {journalEntry[k]}</li>
+								{#if !['parseType', 'date', 'activity', 'minutes', 'line'].includes(k)}
+									<li>{k}: {journalEntry[k]}</li>
+								{/if}
 							{/each}
 						</ul>
 					</div>
