@@ -14,6 +14,9 @@
 
 <nav class="flex gap-8 px-8 md:px-16 py-4 bg-gray-50 items-center shadow sticky top-0 z-50">
 	<a href="/" class="text-4xl flex-none text-black">habits</a>
+	<!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+	</svg> -->
 	{#if loading}
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
