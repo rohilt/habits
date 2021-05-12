@@ -13,13 +13,26 @@
 	let overviewData;
 
 	$: if (data) filteredData = data;
-	$: if (filteredData)
+	$: if (filteredData) {
 		overviewData = filteredData.reduce((p, c: Entry) => {
 			return {
 				...p,
 				[c.activity]: (p[c.activity] ? p[c.activity] : 0) + c.minutes
 			};
 		}, {});
+		let activities = Object.keys(overviewData).sort(
+			(a1, a2) => overviewData[a2] - overviewData[a1]
+		);
+		overviewData = {
+			...activities.slice(0, 4).reduce((p, a) => {
+				return {
+					...p,
+					[a]: overviewData[a]
+				};
+			}, {}),
+			Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
+		};
+	}
 	$: console.log(overviewData);
 </script>
 
