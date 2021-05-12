@@ -7,7 +7,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	let timeView = 'today';
+	let timeView = 'this week';
 	let data = maybeJournal.parseType == 'journal' ? maybeJournal.entries : null;
 	let filteredData;
 	let overviewData;
@@ -48,25 +48,23 @@
 <div class="flex flex-col items-center w-full items-stretch gap-4">
 	<button on:click={() => dispatch('fileUpload', {})}>(return to file upload)</button>
 	{#if maybeJournal.parseType == 'journal'}
-		<div class="flex divide-x items-stretch md:w-1/2 md:self-center">
-			<button
-				class="flex-1 p-2 ring-gray-200"
-				class:underline={timeView == 'today'}
-				on:click={() => (timeView = 'today')}>today</button
-			>
+		<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
 			<button
 				class="flex-1 p-2 ring-gray-200"
 				class:underline={timeView == 'this week'}
+				class:shadow-inner={timeView == 'this week'}
 				on:click={() => (timeView = 'this week')}>this week</button
 			>
 			<button
 				class="flex-1 p-2 ring-gray-200"
 				class:underline={timeView == 'this month'}
+				class:shadow-inner={timeView == 'this month'}
 				on:click={() => (timeView = 'this month')}>this month</button
 			>
 			<button
 				class="flex-1 p-2 ring-gray-200"
 				class:underline={timeView == 'all time'}
+				class:shadow-inner={timeView == 'all time'}
 				on:click={() => (timeView = 'all time')}>all time</button
 			>
 		</div>
