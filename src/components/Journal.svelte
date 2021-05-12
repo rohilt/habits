@@ -49,33 +49,39 @@
 	});
 </script>
 
-<div>
-	<button class="underline" on:click={() => dispatch('fileUpload', {})}
-		>(return to file upload)</button
-	>
-	<div class="relative w-100">
-		<canvas bind:this={ctx} id="myChart" />
+<div class="flex flex-col items-center w-full items-stretch gap-4">
+	<button on:click={() => dispatch('fileUpload', {})}>(return to file upload)</button>
+	<div class="flex divide-x items-stretch md:w-1/2 md:self-center">
+		<button class="flex-1">today</button>
+		<button class="flex-1">this week</button>
+		<button class="flex-1">this month</button>
+		<button class="flex-1">all time</button>
 	</div>
-	<div class="flex flex-wrap gap-4 justify-items-center">
-		{#if maybeJournal.parseType == 'journal'}
-			{#each maybeJournal.entries as journalEntry}
-				<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
-					<div class="text-indigo-600 text-center font-italic">
-						{journalEntry.date.toISOString().slice(0, 10)}
+	<div class="md:grid md:grid-cols-2 gap-16">
+		<div class="relative md:p-4">
+			<canvas bind:this={ctx} id="myChart" />
+		</div>
+		<div class="flex flex-wrap gap-4 justify-items-center">
+			{#if maybeJournal.parseType == 'journal'}
+				{#each maybeJournal.entries as journalEntry}
+					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
+						<div class="text-indigo-600 text-center font-italic">
+							{journalEntry.date.toISOString().slice(0, 10)}
+						</div>
+						<br />
+						<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
+						<ul class="list-disc list-inside">
+							{#each Object.keys(journalEntry) as k}
+								<li>{k}: {journalEntry[k]}</li>
+							{/each}
+						</ul>
 					</div>
-					<br />
-					<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
-					<ul class="list-disc list-inside">
-						{#each Object.keys(journalEntry) as k}
-							<li>{k}: {journalEntry[k]}</li>
-						{/each}
-					</ul>
-				</div>
-			{/each}
-		{:else}
-			<p>parse error: {maybeJournal.error}</p>
-			<br />
-			<p>error at {maybeJournal.activity}, {maybeJournal.date}</p>
-		{/if}
+				{/each}
+			{:else}
+				<p>parse error: {maybeJournal.error}</p>
+				<br />
+				<p>error at {maybeJournal.activity}, {maybeJournal.date}</p>
+			{/if}
+		</div>
 	</div>
 </div>
