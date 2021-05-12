@@ -25,7 +25,7 @@
 						>about page</a
 					>.
 				</div>
-				<div class="md:col-span-2 flex-col content-center md:pl-16">
+				<div class="md:col-span-2 flex-col content-center md:pl-12">
 					<Dropzone
 						accept="text/plain"
 						on:drop={(e) => {
