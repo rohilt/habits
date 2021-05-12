@@ -34,7 +34,7 @@
 				}, {})
 			};
 			console.log(activities.slice(4));
-			if (activities.slice(4).length === 0)
+			if (activities.slice(4).length != 0)
 				overviewData = {
 					...overviewData,
 					Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
