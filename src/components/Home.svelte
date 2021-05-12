@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Dropzone from 'svelte-file-dropzone';
 	import Journal from './Journal.svelte';
 	import { parseJournal } from '../parser/parser';
 
 	let files: FileList;
+	let uploadFile = false;
 </script>
 
 <main>
-	<div class="flex px-8 md:px-16 py-8">
-		{#if files}
+	<div in:fade class="flex px-8 md:px-16 py-8">
+		{#if uploadFile}
 			{#await files[0].text().then((t) => parseJournal(t))}
 				<p>Loading {files[0].name}...</p>
 			{:then maybeJournal}
@@ -16,17 +18,36 @@
 			{/await}
 		{:else}
 			<!-- <input type="file" bind:files /> -->
-			<div class="flex-grow grid grid-cols-1 gap-4 md:grid-cols-3">
-				<div>testing</div>
-				<div class="md:col-span-2">
+			<div in:fade class="flex-grow grid grid-cols-1 gap-4 md:grid-cols-3 md:divide-x">
+				<div>
+					Upload a habits journal file to continue. To learn more about how to create a habits
+					journal file and what this application does, visit the <a class="underline" href="/about"
+						>about page</a
+					>.
+				</div>
+				<div class="md:col-span-2 flex-col content-center md:px-16">
 					<Dropzone
 						accept="text/plain"
 						on:drop={(e) => {
 							files = e.detail.acceptedFiles;
 						}}
 					>
-						<p>Upload a file to get started.</p>
+						{#if files}
+							<p>Uploaded {files[0].name}.</p>
+						{:else}
+							<p>Upload a journal file.</p>
+						{/if}
 					</Dropzone>
+					{#if files}
+						<br />
+						<button
+							in:fade
+							class="place-self-center rounded-full bg-gray-50 border-2 border-gray-200 text-l px-4 py-2 w-min"
+							on:click={() => (uploadFile = true)}
+						>
+							continue
+						</button>
+					{/if}
 				</div>
 			</div>
 		{/if}
