@@ -14,7 +14,7 @@
 			{#await files[0].text().then((t) => parseJournal(t))}
 				<p>Loading {files[0].name}...</p>
 			{:then maybeJournal}
-				<Journal {maybeJournal} on:fileUpload={() => (uploadFile = false)} />
+				<Journal {maybeJournal} on:fileUpload={() => (uploadFile = false)} on:loading />
 			{/await}
 		{:else}
 			<!-- <input type="file" bind:files /> -->

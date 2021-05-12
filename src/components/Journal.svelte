@@ -12,26 +12,30 @@
 	let filteredData;
 	let overviewData;
 
-	$: if (data) filteredData = data;
-	$: if (filteredData) {
-		overviewData = filteredData.reduce((p, c: Entry) => {
-			return {
-				...p,
-				[c.activity]: (p[c.activity] ? p[c.activity] : 0) + c.minutes
-			};
-		}, {});
-		let activities = Object.keys(overviewData).sort(
-			(a1, a2) => overviewData[a2] - overviewData[a1]
-		);
-		overviewData = {
-			...activities.slice(0, 4).reduce((p, a) => {
+	$: {
+		dispatch('loading', { status: true });
+		if (data) {
+			filteredData = data; // TODO filtering logic
+			overviewData = filteredData.reduce((p, c: Entry) => {
 				return {
 					...p,
-					[a]: overviewData[a]
+					[c.activity]: (p[c.activity] ? p[c.activity] : 0) + c.minutes
 				};
-			}, {}),
-			Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
-		};
+			}, {});
+			let activities = Object.keys(overviewData).sort(
+				(a1, a2) => overviewData[a2] - overviewData[a1]
+			);
+			overviewData = {
+				...activities.slice(0, 4).reduce((p, a) => {
+					return {
+						...p,
+						[a]: overviewData[a]
+					};
+				}, {}),
+				Other: activities.slice(4).reduce((p, a) => p + overviewData[a], 0)
+			};
+		}
+		dispatch('loading', { status: false });
 	}
 	$: console.log(overviewData);
 </script>
