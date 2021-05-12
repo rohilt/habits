@@ -7,8 +7,9 @@
 
 	const dispatch = createEventDispatcher();
 
+	let timeView = 'today';
+
 	let ctx;
-	$: console.log(ctx);
 	onMount(() => {
 		let chart = new Chart(ctx, {
 			type: 'bar',
@@ -52,10 +53,26 @@
 <div class="flex flex-col items-center w-full items-stretch gap-4">
 	<button on:click={() => dispatch('fileUpload', {})}>(return to file upload)</button>
 	<div class="flex divide-x items-stretch md:w-1/2 md:self-center">
-		<button class="flex-1">today</button>
-		<button class="flex-1">this week</button>
-		<button class="flex-1">this month</button>
-		<button class="flex-1">all time</button>
+		<button
+			class="flex-1 p-2 ring-gray-200"
+			class:underline={timeView == 'today'}
+			on:click={() => (timeView = 'today')}>today</button
+		>
+		<button
+			class="flex-1 p-2 ring-gray-200"
+			class:underline={timeView == 'this week'}
+			on:click={() => (timeView = 'this week')}>this week</button
+		>
+		<button
+			class="flex-1 p-2 ring-gray-200"
+			class:underline={timeView == 'this month'}
+			on:click={() => (timeView = 'this month')}>this month</button
+		>
+		<button
+			class="flex-1 p-2 ring-gray-200"
+			class:underline={timeView == 'all time'}
+			on:click={() => (timeView = 'all time')}>all time</button
+		>
 	</div>
 	<div class="md:grid md:grid-cols-2 gap-16">
 		<div class="relative md:p-4">
