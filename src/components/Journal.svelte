@@ -11,6 +11,17 @@
 	let filteredData;
 	let overviewData;
 
+	const formatTime = (minutes: number) => {
+		let time = {
+			hour: Math.floor(minutes / 60),
+			minute: Math.floor(minutes % 60)
+		};
+		console.log(time);
+		return Object.keys(time)
+			.map((k) => (!time[k] ? '' : time[k] + ' ' + String(k) + (time[k] == 1 ? '' : 's')))
+			.join(', ');
+	};
+
 	$: {
 		dispatch('loading', { status: true });
 		if ($journal) {
@@ -50,19 +61,19 @@
 		<div class="flex flex-col md:flex-row gap-4 md:gap-8 justify-center">
 			<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
 				<button
-					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class="flex-1 p-2 ring-gray-200 text-gray-500 text-sm md:text-base"
 					class:shadow-inner={timeView == 'this week'}
 					class:bg-gray-100={timeView == 'this week'}
 					on:click={() => (timeView = 'this week')}>this week</button
 				>
 				<button
-					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class="flex-1 p-2 ring-gray-200 text-gray-500 text-sm md:text-base"
 					class:shadow-inner={timeView == 'this month'}
 					class:bg-gray-100={timeView == 'this month'}
 					on:click={() => (timeView = 'this month')}>this month</button
 				>
 				<button
-					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class="flex-1 p-2 ring-gray-200 text-gray-500 text-sm md:text-base"
 					class:shadow-inner={timeView == 'all time'}
 					class:bg-gray-100={timeView == 'all time'}
 					on:click={() => (timeView = 'all time')}>all time</button
@@ -70,12 +81,12 @@
 			</div>
 			<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
 				<button
-					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class="flex-1 p-2 ring-gray-200 text-gray-500 text-sm md:text-base"
 					class:bg-gray-100={graphView == 'overview'}
 					class:shadow-inner={graphView == 'overview'}>overview</button
 				>
 				<button
-					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class="flex-1 p-2 ring-gray-200 text-gray-500 text-sm md:text-base"
 					class:bg-gray-100={graphView == 'details'}
 					class:shadow-inner={graphView == 'details'}>details</button
 				>
@@ -117,7 +128,7 @@
 											</div>
 										</td>
 										<td class="px-6 py-4 whitespace-nowrap">
-											<div class="text-sm text-gray-900">1 hour, 30 minutes</div>
+											<div class="text-sm text-gray-900">{formatTime(100)}</div>
 										</td>
 									</tr>
 
