@@ -7,6 +7,7 @@
 	const dispatch = createEventDispatcher();
 
 	let timeView = 'this week';
+	let graphView = 'overview';
 	let filteredData;
 	let overviewData;
 
@@ -46,29 +47,43 @@
 
 <div class="flex flex-col items-center w-full items-stretch gap-4">
 	{#if $journal}
-		<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
-			<button
-				class="flex-1 p-2 ring-gray-200"
-				class:underline={timeView == 'this week'}
-				class:shadow-inner={timeView == 'this week'}
-				on:click={() => (timeView = 'this week')}>this week</button
-			>
-			<button
-				class="flex-1 p-2 ring-gray-200"
-				class:underline={timeView == 'this month'}
-				class:shadow-inner={timeView == 'this month'}
-				on:click={() => (timeView = 'this month')}>this month</button
-			>
-			<button
-				class="flex-1 p-2 ring-gray-200"
-				class:underline={timeView == 'all time'}
-				class:shadow-inner={timeView == 'all time'}
-				on:click={() => (timeView = 'all time')}>all time</button
-			>
+		<div class="flex flex-col md:flex-row gap-4 md:gap-8 justify-center">
+			<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
+				<button
+					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class:shadow-inner={timeView == 'this week'}
+					class:text-gray-900={timeView == 'this week'}
+					on:click={() => (timeView = 'this week')}>this week</button
+				>
+				<button
+					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class:shadow-inner={timeView == 'this month'}
+					class:text-gray-900={timeView == 'this month'}
+					on:click={() => (timeView = 'this month')}>this month</button
+				>
+				<button
+					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class:shadow-inner={timeView == 'all time'}
+					class:text-gray-900={timeView == 'all time'}
+					on:click={() => (timeView = 'all time')}>all time</button
+				>
+			</div>
+			<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
+				<button
+					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class:text-gray-900={graphView == 'overview'}
+					class:shadow-inner={graphView == 'overview'}>overview</button
+				>
+				<button
+					class="flex-1 p-2 ring-gray-200 text-gray-500"
+					class:text-gray-900={graphView == 'details'}
+					class:shadow-inner={graphView == 'details'}>details</button
+				>
+			</div>
 		</div>
 		<div class="md:grid md:grid-cols-2 gap-16">
 			<OverviewChart {overviewData} />
-			<div class="flex flex-col p-8">
+			<div class="flex flex-col py-8 md:p-8">
 				<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 					<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 						<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -77,15 +92,15 @@
 									<tr>
 										<th
 											scope="col"
-											class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider"
 										>
-											Activity
+											activity
 										</th>
 										<th
 											scope="col"
-											class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider"
 										>
-											Time
+											time
 										</th>
 									</tr>
 								</thead>
@@ -93,8 +108,8 @@
 									<tr>
 										<td class="px-6 py-4 whitespace-nowrap">
 											<div class="flex items-center">
-												<div class="flex-shrink-0 h-10 w-10">
-													<span class="bg-yellow-400 h-10 w-10 rounded-full block" />
+												<div class="flex-shrink-0 h-4 w-4">
+													<span class="bg-yellow-400 h-4 w-4 rounded-full block" />
 												</div>
 												<div class="ml-4">
 													<div class="text-sm font-medium text-gray-900">Example Activity</div>
