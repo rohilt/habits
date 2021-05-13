@@ -52,31 +52,31 @@
 				<button
 					class="flex-1 p-2 ring-gray-200 text-gray-500"
 					class:shadow-inner={timeView == 'this week'}
-					class:text-gray-900={timeView == 'this week'}
+					class:bg-gray-100={timeView == 'this week'}
 					on:click={() => (timeView = 'this week')}>this week</button
 				>
 				<button
 					class="flex-1 p-2 ring-gray-200 text-gray-500"
 					class:shadow-inner={timeView == 'this month'}
-					class:text-gray-900={timeView == 'this month'}
+					class:bg-gray-100={timeView == 'this month'}
 					on:click={() => (timeView = 'this month')}>this month</button
 				>
 				<button
 					class="flex-1 p-2 ring-gray-200 text-gray-500"
 					class:shadow-inner={timeView == 'all time'}
-					class:text-gray-900={timeView == 'all time'}
+					class:bg-gray-100={timeView == 'all time'}
 					on:click={() => (timeView = 'all time')}>all time</button
 				>
 			</div>
 			<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
 				<button
 					class="flex-1 p-2 ring-gray-200 text-gray-500"
-					class:text-gray-900={graphView == 'overview'}
+					class:bg-gray-100={graphView == 'overview'}
 					class:shadow-inner={graphView == 'overview'}>overview</button
 				>
 				<button
 					class="flex-1 p-2 ring-gray-200 text-gray-500"
-					class:text-gray-900={graphView == 'details'}
+					class:bg-gray-100={graphView == 'details'}
 					class:shadow-inner={graphView == 'details'}>details</button
 				>
 			</div>
