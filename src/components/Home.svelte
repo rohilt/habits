@@ -117,7 +117,7 @@
 					{#if $journal.journal}
 						<button
 							in:fade
-							class="place-self-center rounded-full bg-gray-50 border-2 border-gray-200 text-l px-4 py-2 w-min"
+							class="place-self-center rounded-full bg-gray-50 border-2 border-blue-400 text-l px-4 py-2 w-min"
 							on:click={() => uploadPage.set(false)}
 						>
 							continue

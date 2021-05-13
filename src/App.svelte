@@ -16,7 +16,7 @@
 
 <nav class="flex gap-8 px-8 md:px-16 py-4 bg-gray-50 items-center shadow sticky top-0 z-50">
 	{#if $uploadPage || page != Home}
-		<a in:fade href="/" class="text-4xl flex-none text-black">habits</a>
+		<a in:fade href="/" class="text-2xl md:text-4xl flex-none text-black">habits</a>
 	{:else}
 		<button in:fade on:click={() => uploadPage.set(true)}>
 			<svg
@@ -29,7 +29,7 @@
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 			</svg>
 		</button>
-		<a in:fade href="/" class="hidden md:block text-4xl flex-none text-black">habits</a>
+		<a in:fade href="/" class="hidden md:block text-2xl md:text-4xl flex-none text-black">habits</a>
 	{/if}
 	{#if loading}
 		<svg
