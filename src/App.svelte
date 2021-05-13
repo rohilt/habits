@@ -1,42 +1,41 @@
 <script lang="ts">
-	import { parseJournal } from './parser/parser';
+	import router from 'page';
+	import Home from './components/Home.svelte';
+	import About from './components/About.svelte';
 
-	let files: FileList;
+	let page;
+	let loading = false;
+
+	router('/', () => (page = Home));
+	router('/about', () => (page = About));
+
+	router.start();
 </script>
 
-<main>
-	{#if files}
-		{#await files[0].text().then((t) => parseJournal(t))}
-			<p>Loading {files[0].name}...</p>
-		{:then maybeJournal}
-			<div class="flex flex-wrap gap-4 justify-items-center">
-				{#if maybeJournal.parseType == 'journal'}
-					{#each maybeJournal.entries as journalEntry}
-						<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
-							<div class="text-indigo-600 text-center font-italic">
-								{journalEntry.date.toISOString().slice(0, 10)}
-							</div>
-							<br />
-							<div class="text-2xl text-uppercase font-bold">{journalEntry.activity}</div>
-							<ul class="list-disc list-inside">
-								{#each Object.keys(journalEntry) as k}
-									<li>{k}: {journalEntry[k]}</li>
-								{/each}
-							</ul>
-						</div>
-					{/each}
-				{:else}
-					<p>parse error: {maybeJournal.error}</p>
-					<br />
-					<p>error at {maybeJournal.activity}, {maybeJournal.date}</p>
-				{/if}
-			</div>
-		{/await}
-	{:else}
-		<p>Upload a file to get started.</p>
-		<input type="file" bind:files />
+<nav class="flex gap-8 px-8 md:px-16 py-4 bg-gray-50 items-center shadow sticky top-0 z-50">
+	<a href="/" class="text-4xl flex-none text-black">habits</a>
+	<!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+	</svg> -->
+	{#if loading}
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="animate-spin h-5 w-5"
+			viewBox="0 0 20 20"
+			fill="currentColor"
+		>
+			<path
+				fill-rule="evenodd"
+				d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+				clip-rule="evenodd"
+			/>
+		</svg>
 	{/if}
-</main>
+	<div class="flex-grow" />
+	<a href="/about" class="flex-none">about</a>
+	<a href="https://github.com/rohilt/habits" target="_blank" class="flex-none">source</a>
+</nav>
+<svelte:component this={page} on:loading={(l) => (loading = l.detail.status)} />
 
 <style global lang="postcss">
 	@tailwind base;
