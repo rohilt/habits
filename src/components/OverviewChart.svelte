@@ -31,12 +31,13 @@
 					responsive: true,
 					plugins: {
 						legend: {
-							position: 'bottom',
-							labels: {
-								font: {
-									family: 'Fira Sans'
-								}
-							}
+							// position: 'bottom',
+							// labels: {
+							// 	font: {
+							// 		family: 'Fira Sans'
+							// 	}
+							// }
+							display: false
 						},
 						title: {
 							display: false
