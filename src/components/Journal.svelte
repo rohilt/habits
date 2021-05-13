@@ -2,20 +2,18 @@
 	import type { Journal, ParseError, Entry } from '../parser/parser.types';
 	import { createEventDispatcher } from 'svelte';
 	import OverviewChart from './OverviewChart.svelte';
-
-	export let maybeJournal: Journal | ParseError;
+	import { journal } from '../stores/journal';
 
 	const dispatch = createEventDispatcher();
 
 	let timeView = 'this week';
-	let data = maybeJournal.parseType == 'journal' ? maybeJournal.entries : null;
 	let filteredData;
 	let overviewData;
 
 	$: {
 		dispatch('loading', { status: true });
-		if (data) {
-			filteredData = data; // TODO filtering logic
+		if ($journal) {
+			filteredData = $journal.journal.entries; // TODO filtering logic
 			overviewData = filteredData.reduce((p, c: Entry) => {
 				return {
 					...p,
@@ -46,8 +44,7 @@
 </script>
 
 <div class="flex flex-col items-center w-full items-stretch gap-4">
-	<button on:click={() => dispatch('fileUpload', {})}>(return to file upload)</button>
-	{#if maybeJournal.parseType == 'journal'}
+	{#if $journal}
 		<div class="flex divide-x items-stretch md:w-1/2 md:self-center bg-gray-50 shadow">
 			<button
 				class="flex-1 p-2 ring-gray-200"
@@ -71,7 +68,7 @@
 		<div class="md:grid md:grid-cols-2 gap-16">
 			<OverviewChart {overviewData} />
 			<div class="flex flex-wrap gap-4 justify-items-center">
-				{#each maybeJournal.entries as journalEntry}
+				{#each $journal.journal.entries as journalEntry}
 					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
 						<div class="text-indigo-600 text-center font-italic">
 							{journalEntry.date.toISOString().slice(0, 10)}
@@ -94,12 +91,6 @@
 			</div>
 		</div>
 	{:else}
-		<div>
-			Oh no!
-			<br />
-			<p>parse error: {maybeJournal.error}</p>
-			<br />
-			<p>error at {maybeJournal.activity}, {maybeJournal.date}</p>
-		</div>
+		<p>Oh no! Something has gone terribly wrong.</p>
 	{/if}
 </div>
