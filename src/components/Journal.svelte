@@ -68,7 +68,52 @@
 		</div>
 		<div class="md:grid md:grid-cols-2 gap-16">
 			<OverviewChart {overviewData} />
-			<div class="flex flex-wrap gap-4 justify-items-center">
+			<div class="flex flex-col p-8">
+				<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+						<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+							<table class="min-w-full divide-y divide-gray-200">
+								<thead class="bg-gray-50">
+									<tr>
+										<th
+											scope="col"
+											class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+										>
+											Activity
+										</th>
+										<th
+											scope="col"
+											class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+										>
+											Time
+										</th>
+									</tr>
+								</thead>
+								<tbody class="bg-white divide-y divide-gray-200">
+									<tr>
+										<td class="px-6 py-4 whitespace-nowrap">
+											<div class="flex items-center">
+												<div class="flex-shrink-0 h-10 w-10">
+													<span class="bg-yellow-400 h-10 w-10 rounded-full block" />
+												</div>
+												<div class="ml-4">
+													<div class="text-sm font-medium text-gray-900">Example Activity</div>
+												</div>
+											</div>
+										</td>
+										<td class="px-6 py-4 whitespace-nowrap">
+											<div class="text-sm text-gray-900">1 hour, 30 minutes</div>
+										</td>
+									</tr>
+
+									<!-- More people... -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="flex flex-wrap gap-4 justify-items-center">
 				{#each $journal.journal.entries as journalEntry}
 					<div class="bg-gray-100 bg-opacity-50 rounded-xl p-8 ring ring-gray-100 shadow">
 						<div class="text-indigo-600 text-center font-italic">
@@ -89,7 +134,7 @@
 						</ul>
 					</div>
 				{/each}
-			</div>
+			</div> -->
 		</div>
 	{:else}
 		<p>Oh no! Something has gone terribly wrong.</p>
