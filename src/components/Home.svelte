@@ -138,7 +138,8 @@
 						</button>
 					{:else if $journal.parseError}
 						<div in:fade class="bg-red-50 border-2 border-red-200 p-4">
-							There was a parse error at...
+							There was a parse error at {$journal.parseError.line}, {$journal.parseError.error}, {$journal
+								.parseError.date}, {$journal.parseError.activity}
 						</div>
 					{/if}
 				</div>
