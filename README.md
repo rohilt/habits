@@ -20,8 +20,44 @@ It also uses TailwindCSS and the Jest testing framework.
 
 The required file format is extremely flexible, as the examples below illustrate.
 
-Suppose that we went biking for 
-The basic structure of an entry is the following
+Suppose that we went bicycling for 1 hour, 45 minutes this morning.
+We could record this information in the following way.
+
+```
+2021-01-01 Bicycling
+  1 hour, 45 minutes
+```
+The file parser can also recognize variations of the words "minutes" or "hours", so equivalently, we could write
+
+```
+2021-01-01 Bicycling
+  1 hr 45 mins
+```
+
+What if we wanted to keep track of some more information about this activity?
+For instance, the number of miles bicycled, or the location?
+We can easily extend this entry with arbitrary properties.
+
+```
+2021-01-01 Bicycling
+  1 hour, 45 minutes
+  :miles 20
+  :location Gainesville-Hawthorne State Trail
+```
+
+We can choose any value for the arbitrary property names except `minutes`, since that is reserved to record the time values.
+These properties can be numbers, strings, or booleans.
+
+Numerical properties are also automatically summed up by the parser. For instance, we could have also written
+
+```
+2020-01-01 Bicycling
+  1 hour
+  :miles 12
+  :location Gainesville-Hawthorne State Trail
+  15 mins, 30 minutes
+  :miles 8
+```
 
 ### File parser
 
