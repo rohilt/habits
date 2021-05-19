@@ -13,6 +13,7 @@
 
 	const onFileUpload = async (e) => {
 		dispatch('loading', { status: true });
+		journal.set({ fileName: null, journal: null, parseError: null });
 		files = e.detail.acceptedFiles;
 		maybeJournal = await files[0].text().then((t) => parseJournal(t));
 		if (maybeJournal.parseType == 'journal')
