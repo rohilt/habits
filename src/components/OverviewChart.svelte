@@ -31,19 +31,20 @@
 					responsive: true,
 					plugins: {
 						legend: {
-							position: 'bottom',
-							labels: {
-								font: {
-									family: 'Fira Sans'
-								}
-							}
+							// position: 'bottom',
+							// labels: {
+							// 	font: {
+							// 		family: 'Fira Sans'
+							// 	}
+							// }
+							display: false
 						},
 						title: {
 							display: false
 						},
 						tooltip: {
-							backgroundColor: 'rgb(255, 255, 255)',
-							bodyColor: 'rgb(0, 0, 0)'
+							backgroundColor: 'rgb(249, 250, 251)',
+							bodyColor: 'rgb(107, 114, 128)'
 						}
 					}
 				}

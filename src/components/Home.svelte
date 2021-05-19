@@ -117,7 +117,7 @@
 					{#if $journal.journal}
 						<button
 							in:fade
-							class="place-self-center rounded-full bg-gray-50 border-2 border-gray-200 text-l px-4 py-2 w-min"
+							class="place-self-center rounded-full bg-gray-50 border-2 border-blue-400 text-l px-4 py-2 w-min"
 							on:click={() => uploadPage.set(false)}
 						>
 							continue
@@ -138,7 +138,8 @@
 						</button>
 					{:else if $journal.parseError}
 						<div in:fade class="bg-red-50 border-2 border-red-200 p-4">
-							There was a parse error at...
+							There was a parse error at {$journal.parseError.line}, {$journal.parseError.error}, {$journal
+								.parseError.date}, {$journal.parseError.activity}
 						</div>
 					{/if}
 				</div>

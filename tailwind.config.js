@@ -9,7 +9,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      'sans': ['Fira Sans'],
+      'sans': ['IBM Plex Sans'],
       'serif': ['Source Serif Pro'],
       'monospace': ['Source Code Pro']
     },
