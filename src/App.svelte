@@ -14,23 +14,32 @@
 	router.start();
 </script>
 
-<nav class="flex gap-8 px-8 md:px-16 py-4 bg-gray-50 items-center shadow sticky top-0 z-50">
-	{#if $uploadPage || page != Home}
-		<a in:fade href="/" class="text-2xl md:text-4xl flex-none text-black">habits</a>
-	{:else}
-		<button in:fade on:click={() => uploadPage.set(true)}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
+<nav class="flex gap-8 pr-8 md:pr-16 py-4 bg-gray-50 items-center shadow sticky top-0 z-50">
+	<div class="w-0 md:w-8 flex self-center">
+		{#if page != Home || !$uploadPage}
+			<button
+				in:fade
+				on:click={() => {
+					uploadPage.set(true);
+					router('/');
+				}}
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-			</svg>
-		</button>
-		<a in:fade href="/" class="hidden md:block text-2xl md:text-4xl flex-none text-black">habits</a>
-	{/if}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6 self-center pl-2 md:h-10 md:w-10 md:pl-4"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			</button>
+		{/if}
+	</div>
+	<div in:fade class="text-2xl md:text-4xl flex-none text-black">habits</div>
 	{#if loading}
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
