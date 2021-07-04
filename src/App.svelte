@@ -7,6 +7,7 @@
 
 	let page;
 	let loading = false;
+	export let greet;
 
 	router('/', () => (page = Home));
 	router('/about', () => (page = About));
@@ -59,6 +60,7 @@
 	<a href="https://github.com/rohilt/habits" target="_blank" class="flex-none">source</a>
 </nav>
 <svelte:component this={page} on:loading={(l) => (loading = l.detail.status)} />
+<button on:click={greet}>Testing</button>
 
 <style global lang="postcss">
 	@tailwind base;
