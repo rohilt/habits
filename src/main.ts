@@ -13,7 +13,7 @@ const init = async () => {
 		target: document.body,
 		props: {
 			// https://svelte.dev/docs#Creating_a_component
-			greet: gameOfLife.greet
+			greet: gameOfLife
 		}
 	});
 };

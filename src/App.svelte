@@ -60,7 +60,7 @@
 	<a href="https://github.com/rohilt/habits" target="_blank" class="flex-none">source</a>
 </nav>
 <svelte:component this={page} on:loading={(l) => (loading = l.detail.status)} />
-<button on:click={greet}>Testing</button>
+<button on:click={() => console.log(greet.Entry.new().getMinutes())}>Testing</button>
 
 <style global lang="postcss">
 	@tailwind base;
