@@ -38,4 +38,7 @@ impl Entry {
     pub fn getMinutes(&self) -> u32 {
         self.minutes
     }
+    pub fn input_string(&self, s: &str) -> String {
+        s.to_string() + " from rust"
+    }
 }

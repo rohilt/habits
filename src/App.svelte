@@ -61,6 +61,7 @@
 </nav>
 <svelte:component this={page} on:loading={(l) => (loading = l.detail.status)} />
 <button on:click={() => console.log(greet.Entry.new().getMinutes())}>Testing</button>
+<button on:click={() => console.log(greet.Entry.new().input_string('asdf'))}>Another test</button>
 
 <style global lang="postcss">
 	@tailwind base;
